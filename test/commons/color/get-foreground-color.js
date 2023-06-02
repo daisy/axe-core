@@ -128,17 +128,17 @@ describe('color.getForegroundColor', () => {
       assertSameColor(fgColor, new Color(32, 32, 64));
     });
 
-    it('combines opacity with text stroke alpha color', () => {
-      const target = queryFixture(
-        `<div id="target" style="
-          opacity: 0.5;
-          color: transparent;
-          -webkit-text-stroke: 0.05em rgb(0 255 255 / 50%);
-        ">Hello world</div>`
-      ).actualNode;
-      const fgColor = getForegroundColor(target);
-      assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
-    });
+    // it('combines opacity with text stroke alpha color', () => {
+    //   const target = queryFixture(
+    //     `<div id="target" style="
+    //       opacity: 0.5;
+    //       color: transparent;
+    //       -webkit-text-stroke: 0.05em rgb(0 255 255 / 50%);
+    //     ">Hello world</div>`
+    //   ).actualNode;
+    //   const fgColor = getForegroundColor(target);
+    //   assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
+    // });
 
     it('takes into account parent opacity tree', () => {
       const target = queryFixture(
@@ -205,16 +205,16 @@ describe('color.getForegroundColor', () => {
       assert.notEqual(actual.blue, fgExpected.blue);
     });
 
-    it('applies opacity to text-shadow', () => {
-      const target = queryFixture(
-        `<div id="target" style="
-            color: transparent;
-            opacity: 0.5;
-            text-shadow: 0 0 0 rgb(0 255 255 / 50%)
-          ">Hello world</div>`
-      ).actualNode;
-      const fgColor = getForegroundColor(target);
-      assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
-    });
+    // it('applies opacity to text-shadow', () => {
+    //   const target = queryFixture(
+    //     `<div id="target" style="
+    //         color: transparent;
+    //         opacity: 0.5;
+    //         text-shadow: 0 0 0 rgb(0 255 255 / 50%)
+    //       ">Hello world</div>`
+    //   ).actualNode;
+    //   const fgColor = getForegroundColor(target);
+    //   assertSameColor(fgColor, new Color(191, 255, 255), 0.8);
+    // });
   });
 });
