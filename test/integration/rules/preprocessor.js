@@ -19,7 +19,15 @@ var createIntegrationPreprocessor = function (logger) {
       // turn the json file into the a test file using the js test template
       // and add the test data to it
       var htmlpath = file.originalPath.replace(extRegex, '.html');
-      var html = fs.readFileSync(htmlpath, 'utf-8');
+      htmlpath = htmlpath.replace('-HEADLESS', '');
+      try {
+        var html = fs.readFileSync(htmlpath, 'utf-8');
+      } catch (e) {
+        htmlpath = file.originalPath.replace(extRegex, '.xhtml');
+        htmlpath = htmlpath.replace('-HEADLESS', '');
+        html = fs.readFileSync(htmlpath, 'utf-8');
+      }
+
       try {
         var test = JSON.parse(content);
       } catch (e) {
