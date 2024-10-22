@@ -26,6 +26,9 @@ var testDirs = [
   // npm run test:unit -- --browsers Chrome testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
   // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/link-in-text-block/link-in-text-block.json
 
+  // npm run test:unit -- --browsers Chrome testFiles=test/integration/full/contrast/prototype.js
+  // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/full/contrast/prototype.js
+
   // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/rules/landmark-unique/landmark-unique-pass_.json
   'virtual-rules'
 ];
