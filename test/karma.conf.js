@@ -35,7 +35,7 @@ var testDirs = [
 var testFiles = [];
 var debugPort = 9765; // arbitrary, sync with .vscode/launch.json
 var args = process.argv.slice(2);
-const isHeadless = args.includes('ChromeHeadless') || !args.includes('Chrome');
+// const isHeadless = args.includes('ChromeHeadless');
 
 args.forEach(function (arg) {
   // pattern: testDir=commons,core
@@ -113,24 +113,25 @@ if (testFiles.length) {
     }, []);
 }
 
-console.log(isHeadless, JSON.stringify(args, null, 4));
-if (isHeadless) {
-  console.log('HEADLESS...');
-  for (let i = 0; i < testPaths.length; i++) {
-    // testPaths[i] = testPaths[i].replace(
-    //   'link-in-text-block.json',
-    //   'link-in-text-block-HEADLESS.json'
-    // );
-    // testPaths[i] = testPaths[i].replace(
-    //   'color-contrast.json',
-    //   'color-contrast-HEADLESS.json'
-    // );
-    // testPaths[i] = testPaths[i].replace(
-    //   'color-contrast-enhanced.json',
-    //   'color-contrast-enhanced-HEADLESS.json'
-    // );
-  }
-}
+console.log(JSON.stringify(args, null, 4));
+// console.log(isHeadless, JSON.stringify(args, null, 4));
+// if (isHeadless) {
+//   console.log('HEADLESS...');
+//   for (let i = 0; i < testPaths.length; i++) {
+//     // testPaths[i] = testPaths[i].replace(
+//     //   'link-in-text-block.json',
+//     //   'link-in-text-block-HEADLESS.json'
+//     // );
+//     // testPaths[i] = testPaths[i].replace(
+//     //   'color-contrast.json',
+//     //   'color-contrast-HEADLESS.json'
+//     // );
+//     // testPaths[i] = testPaths[i].replace(
+//     //   'color-contrast-enhanced.json',
+//     //   'color-contrast-enhanced-HEADLESS.json'
+//     // );
+//   }
+// }
 console.log(JSON.stringify(testPaths, null, 4));
 
 module.exports = function (config) {
