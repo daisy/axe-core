@@ -122,7 +122,7 @@ function buildWebDriver(browser) {
   // host of other problems with starting Chrome). the only thing that seems to
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
-  if (browser === 'chrome') {
+  if (browser === 'chrome' || browser === 'chromeheadless') {
     const service = new chrome.ServiceBuilder(chromedriver.path).build();
 
     const options = new chrome.Options().addArguments([
@@ -152,9 +152,19 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
-    ignore: '**/frames/**/*.{html,xhtml}'
-  }).map(url => {
+  const testUrls = globSync(
+    [
+      'test/integration/full/**/*.{html,xhtml}'
+      // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+      // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
+
+      // 'test/integration/full/**/*__.xhtml',
+      // 'test/integration/full/**/*.html',
+    ],
+    {
+      ignore: '**/frames/**/*.{html,xhtml}' // '**/frames/**/*.html'
+    }
+  ).map(url => {
     return 'http://localhost:9876/' + url;
   });
 
