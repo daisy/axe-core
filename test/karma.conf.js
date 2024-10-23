@@ -117,18 +117,18 @@ console.log(isHeadless, JSON.stringify(args, null, 4));
 if (isHeadless) {
   console.log('HEADLESS...');
   for (let i = 0; i < testPaths.length; i++) {
-    testPaths[i] = testPaths[i].replace(
-      'link-in-text-block.json',
-      'link-in-text-block-HEADLESS.json'
-    );
-    testPaths[i] = testPaths[i].replace(
-      'color-contrast.json',
-      'color-contrast-HEADLESS.json'
-    );
-    testPaths[i] = testPaths[i].replace(
-      'color-contrast-enhanced.json',
-      'color-contrast-enhanced-HEADLESS.json'
-    );
+    // testPaths[i] = testPaths[i].replace(
+    //   'link-in-text-block.json',
+    //   'link-in-text-block-HEADLESS.json'
+    // );
+    // testPaths[i] = testPaths[i].replace(
+    //   'color-contrast.json',
+    //   'color-contrast-HEADLESS.json'
+    // );
+    // testPaths[i] = testPaths[i].replace(
+    //   'color-contrast-enhanced.json',
+    //   'color-contrast-enhanced-HEADLESS.json'
+    // );
   }
 }
 console.log(JSON.stringify(testPaths, null, 4));

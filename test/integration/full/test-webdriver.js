@@ -122,7 +122,7 @@ function buildWebDriver(browser) {
   // host of other problems with starting Chrome). the only thing that seems to
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
-  if (browser === 'chrome') {
+  if (browser === 'chrome' || browser === 'chromeheadless') {
     const service = new chrome.ServiceBuilder(chromedriver.path).build();
 
     const options = new chrome.Options().addArguments([
