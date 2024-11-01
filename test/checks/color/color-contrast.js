@@ -132,7 +132,7 @@ describe('color-contrast', function () {
   });
   //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/130.0.0.0 Safari/537.36"
   //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
-  // console.log(JSON.stringify(navigator.userAgent, null, 4), JSON.stringify(Object.keys(window.mocha), null, 4), JSON.stringify(window.mocha.context, null, 4), JSON.stringify(window.mocha.options, null, 4), JSON.stringify(window.chai, null, 4)) &&
+  // console.log(JSON.stringify(navigator.userAgent, null, 4), JSON.stringify(Object.keys(window.mocha), null, 4), JSON.stringify(window.mocha.context, null, 4), JSON.stringify(window.mocha.options, null, 4), JSON.stringify(window.chai, null, 4));
   // navigator.userAgent.includes('HeadlessChrome') &&
   it('should return true for inline elements with sufficient contrast spanning multiple lines', function () {
     var params = checkSetup(

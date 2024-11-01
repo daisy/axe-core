@@ -5,6 +5,7 @@ const { globSync } = require('glob');
 var testDirs = [
   'core',
   'commons',
+  // npm run test:unit -- --browsers Firefox testFiles=test/commons/dom/get-visible-child-text-rects.js
   'rule-matches',
   'checks',
   // npm run test:unit -- --browsers Chrome testDirs=checks
