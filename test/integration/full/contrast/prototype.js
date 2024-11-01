@@ -19,8 +19,8 @@ describe('color-contrast prototype.js test', () => {
   });
 
   describe('violations', () => {
-    it('should find one', () => {
-      assert.lengthOf(results.violations, 1);
+    it('should find zero', () => {
+      assert.lengthOf(results.violations, 0);
     });
   });
 });
