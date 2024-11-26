@@ -1,3 +1,5 @@
+DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/b0c04c4bf4bae3d2de4b1fed893d250ec27f5de8/package.json#L27 )
+
 # axe-core
 
 [![License](https://img.shields.io/npm/l/axe-core.svg?color=c41)](LICENSE)

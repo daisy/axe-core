@@ -118,7 +118,7 @@
     "sri-validate": "node build/sri-update --validate",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "prepare": "husky && npm run patch",
+    "prepare": "HUSKY=1 husky && npm run patch",
     "prebuild": "node ./build/check-node-version.js",
     "pretest": "node ./build/check-node-version.js",
     "postbuild": "prettier --write ./locales/_template.json ./doc/rule-descriptions.md"

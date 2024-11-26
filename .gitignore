@@ -30,3 +30,10 @@ typings/axe-core/axe-core-tests.js
 doc/rule-descriptions.*.md
 
 .history
+
+.flox/run
+.flox/cache
+.flox/lib
+.flox/log
+.flox/NPM_PREFIX
+.flox/NPM_CACHE
