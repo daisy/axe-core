@@ -2,7 +2,13 @@ const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
 const chromedriver = require('chromedriver');
-
+// rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose
+require('dotenv').config({ path: '~/.browser-driver-manager/.env' });
+const chromedriverPath =
+  process.env.CHROMEDRIVER_TEST_PATH || chromedriver.path;
+console.log(
+  `CHROME DRIVER (test) === ${chromedriverPath} (${process.env.CHROMEDRIVER_TEST_PATH} / ${chromedriver.path}) [${process.env.CHROME_TEST_VERSION}] ** ${process.env.CHROME_TEST_PATH}`
+);
 const args = process.argv.slice(2);
 
 // allow running certain browsers through command line args
@@ -123,7 +129,7 @@ function buildWebDriver(browser) {
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
   if (browser === 'chrome' || browser === 'chromeheadless') {
-    const service = new chrome.ServiceBuilder(chromedriver.path).build();
+    const service = new chrome.ServiceBuilder(chromedriverPath).build();
 
     const options = new chrome.Options().addArguments([
       'headless',
