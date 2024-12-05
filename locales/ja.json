@@ -2,11 +2,12 @@
   "lang": "ja",
   "rules": {
     "epub-type-has-matching-role": {
-      "desc": "要素のepub:typeに合ったARIA roleがあることを確認してください。",
+      "description": "要素のepub:typeに合ったARIA roleがあることを確認してください。",
       "help": "epub:typeだけでなくARIA roleも使用する必要があります。"
     },
     "pagebreak-label": {
-      "desc": "ページマーカーにアクセシブルラベルがあるようにしてください。"
+      "description": "ページマーカーにアクセシブルラベルがあることを確認します。",
+      "help": "ページマーカーにはアクセシブルラベルが必要です。"
     },
     "accesskeys": {
       "description": "すべてのaccesskey属性の値が一意であることを確認します",

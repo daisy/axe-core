@@ -2,11 +2,11 @@
   "lang": "da",
   "rules": {
     "epub-type-has-matching-role": {
-      "desc": "Sikrer at elementet har en ARIA rolle, som matcher 'epub:type'",
+      "description": "Sikrer at elementet har en ARIA rolle, som matcher 'epub:type'",
       "help": "ARIA rolle skal være til stede og matche den angivne 'epub:type'"
     },
     "pagebreak-label": {
-      "desc": "Sikrer at sidemarkører har en tilgængelig etiket ('label')"
+      "description": "Sikrer at sidemarkører har en tilgængelig etiket ('label')"
     },
     "accesskeys": {
       "description": "",

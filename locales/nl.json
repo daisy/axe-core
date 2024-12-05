@@ -36,11 +36,11 @@
   },
   "rules": {
     "epub-type-has-matching-role": {
-      "desc": "Ensure the element has an ARIA role matching its epub:type",
+      "description": "Ensure the element has an ARIA role matching its epub:type",
       "help": "ARIA role should be used in addition to epub:type"
     },
     "pagebreak-label": {
-      "desc": "Ensure page markers have an accessible label"
+      "description": "Ensure page markers have an accessible label"
     },
     "aria-required-attr": {
       "description": "Zorg dat elementen met ARIA rollen (role) de vereiste ARIA attributen hebben",

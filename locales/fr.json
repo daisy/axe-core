@@ -2,11 +2,11 @@
   "lang": "fr",
   "rules": {
     "epub-type-has-matching-role": {
-      "desc": "Vérifie qu’un élément a un rôle ARIA correspondant à son epub:type",
+      "description": "Vérifie qu’un élément a un rôle ARIA correspondant à son epub:type",
       "help": "Un rôle ARIA devrait être spécifié en plus de l’epub:type"
     },
     "pagebreak-label": {
-      "desc": "Vérifie que les sauts de page ont un label accessible"
+      "description": "Vérifie que les sauts de page ont un label accessible"
     },
     "accesskeys": {
       "description": "Vérifier que chaque valeur de l’attribut accesskey est unique",

@@ -2,11 +2,11 @@
   "lang": "ko",
   "rules": {
     "epub-type-has-matching-role": {
-      "desc": "Ensure the element has an ARIA role matching its epub:type",
+      "description": "Ensure the element has an ARIA role matching its epub:type",
       "help": "ARIA role should be used in addition to epub:type"
     },
     "pagebreak-label": {
-      "desc": "Ensure page markers have an accessible label"
+      "description": "Ensure page markers have an accessible label"
     },
     "accesskeys": {
       "description": "모든 accesskey 어트리뷰트 값이 고유한지 확인하세요.",
