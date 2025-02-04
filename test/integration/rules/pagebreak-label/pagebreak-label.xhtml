@@ -6,21 +6,6 @@
   <head>
     <title>pagebreak-label test</title>
     <meta charset="utf8" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/node_modules/mocha/mocha.css"
-    />
-    <script src="/node_modules/mocha/mocha.js"></script>
-    <script src="/node_modules/chai/chai.js"></script>
-    <script src="/axe.js"></script>
-    <script>
-      mocha.setup({
-        timeout: 10000,
-        ui: 'bdd'
-      });
-      var assert = chai.assert;
-    </script>
   </head>
   <body>
     <h1>Loomings</h1>
@@ -37,10 +22,5 @@
 <span id="p9desc" aria-hidden="true" hidden="hidden">p9</span>
 <span aria-hidden="true" class="page-number">Page break 9</span>
 </div>
-    <div id="mocha"></div>
-    <script src="/test/integration/no-ui-reporter.js"></script>
-    <script src="/test/testutils.js"></script>
-    <script src="pagebreak-label.js"></script>
-    <script src="/test/integration/adapter.js"></script>
   </body>
 </html>

@@ -26,9 +26,11 @@ describe('pagebreak-label test fail', function () {
       assert.lengthOf(results.violations, 1);
     });
 
-    it('should find #p3 #p4', function () {
+    it('should find #p3 #p4 #p5 #p9', function () {
       assert.deepEqual(results.violations[0].nodes[0].target, ['#p3']);
       assert.deepEqual(results.violations[0].nodes[1].target, ['#p4']);
+      assert.deepEqual(results.violations[0].nodes[2].target, ['#p5']);
+      assert.deepEqual(results.violations[0].nodes[3].target, ['#p9']);
     });
   });
 
@@ -38,9 +40,10 @@ describe('pagebreak-label test fail', function () {
       assert.lengthOf(results.passes, 1);
     });
 
-    it('should find section #p1 #p2', function () {
+    it('should find section #p1 #p2 #p6', function () {
       assert.deepEqual(results.passes[0].nodes[0].target, ['#p1']);
       assert.deepEqual(results.passes[0].nodes[1].target, ['#p2']);
+      assert.deepEqual(results.passes[0].nodes[2].target, ['#p6']);
     });
   });
 

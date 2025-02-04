@@ -1,0 +1,6 @@
+{
+  "description": "pagebreak-label test",
+  "rule": "pagebreak-label",
+  "violations": [["#p3"], ["#p4"], ["#p5"], ["#p9"]],
+  "passes": [["#p1"], ["#p2"], ["#p6"]]
+}
