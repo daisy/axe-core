@@ -89,7 +89,7 @@ These rules are disabled by default, until WCAG 2.2 is more widely adopted and r
 
 | Rule ID                                                                                                   | Description                                         | Impact   | Tags                                           | Issue Type                 | ACT Rules |
 | :-------------------------------------------------------------------------------------------------------- | :-------------------------------------------------- | :------- | :--------------------------------------------- | :------------------------- | :-------- |
-| [pagebreak-label](https://dequeuniversity.com/rules/axe/4.10/pagebreak-label?application=RuleDescription) | Ensure page markers have an accessible label        | Moderate | cat.epub                                       | failure                    |           |
+| [pagebreak-label](https://dequeuniversity.com/rules/axe/4.10/pagebreak-label?application=RuleDescription) | Ensure page markers have an accessible label        | Moderate | cat.epub                                       | failure, needs&nbsp;review |           |
 | [target-size](https://dequeuniversity.com/rules/axe/4.10/target-size?application=RuleDescription)         | Ensure touch targets have sufficient size and space | Serious  | cat.sensory-and-visual-cues, wcag22aa, wcag258 | failure, needs&nbsp;review |           |
 
 ## Best Practices Rules

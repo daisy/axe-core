@@ -8,6 +8,11 @@
     "help": "Page markers must have an accessible label"
   },
   "all": [],
-  "any": ["aria-label", "non-empty-title"],
+  "any": [
+    "aria-label",
+    "aria-labelledby",
+    "non-empty-title",
+    "has-visible-text"
+  ],
   "none": []
 }

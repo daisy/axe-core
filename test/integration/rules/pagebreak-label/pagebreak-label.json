@@ -1,6 +1,15 @@
 {
   "description": "pagebreak-label test",
   "rule": "pagebreak-label",
-  "violations": [["#p3"], ["#p4"], ["#p5"], ["#p9"]],
-  "passes": [["#p1"], ["#p2"], ["#p6"]]
+  "violations": [["#p5"], ["#p5x"]],
+  "passes": [
+    ["#p1"],
+    ["#p2"],
+    ["#p3"],
+    ["#p4"],
+    ["#p6"],
+    ["#p7"],
+    ["#p8"],
+    ["#p9"]
+  ]
 }
