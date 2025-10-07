@@ -1,6 +1,10 @@
 DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/b0c04c4bf4bae3d2de4b1fed893d250ec27f5de8/package.json#L27 )
-`rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 npm install --foreground-scripts && npm run build`
-`rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
+
+- `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 npm install --foreground-scripts && npm run build`
+- `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
+- `npm run test:chromeheadless`
+- `npm run test:chrome`
+- `npm run test:firefox`
 
 # axe-core
 
