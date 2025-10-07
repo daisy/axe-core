@@ -2,7 +2,13 @@ const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
 const chromedriver = require('chromedriver');
-
+// rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose
+require('dotenv').config({ path: '~/.browser-driver-manager/.env' });
+const chromedriverPath =
+  process.env.CHROMEDRIVER_TEST_PATH || chromedriver.path;
+console.log(
+  `CHROME DRIVER (test) === ${chromedriverPath} (${process.env.CHROMEDRIVER_TEST_PATH} / ${chromedriver.path}) [${process.env.CHROME_TEST_VERSION}] ** ${process.env.CHROME_TEST_PATH}`
+);
 const args = process.argv.slice(2);
 
 // allow running certain browsers through command line args
@@ -122,8 +128,8 @@ function buildWebDriver(browser) {
   // host of other problems with starting Chrome). the only thing that seems to
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
-  if (browser === 'chrome') {
-    const service = new chrome.ServiceBuilder(chromedriver.path).build();
+  if (browser === 'chrome' || browser === 'chromeheadless') {
+    const service = new chrome.ServiceBuilder(chromedriverPath).build();
 
     const options = new chrome.Options().addArguments([
       'headless',
@@ -152,9 +158,19 @@ function start(options) {
   options.browser =
     options.browser === 'edge' ? 'MicrosoftEdge' : options.browser;
 
-  const testUrls = globSync(['test/integration/full/**/*.{html,xhtml}'], {
-    ignore: '**/frames/**/*.{html,xhtml}'
-  }).map(url => {
+  const testUrls = globSync(
+    [
+      'test/integration/full/**/*.{html,xhtml}'
+      // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+      // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
+
+      // 'test/integration/full/**/*__.xhtml',
+      // 'test/integration/full/**/*.html',
+    ],
+    {
+      ignore: '**/frames/**/*.{html,xhtml}' // '**/frames/**/*.html'
+    }
+  ).map(url => {
     return 'http://localhost:9876/' + url;
   });
 

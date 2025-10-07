@@ -4,7 +4,8 @@ describe('axe.configure', function () {
   // var Check = axe._thisWillBeDeletedDoNotUse.base.Check;
   var fixture = document.getElementById('fixture');
   var axeVersion = axe.version;
-  var ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  var _v = axe.version.replace(/-\w+\.\w+$/, '');
+  var ver = _v.substring(0, _v.lastIndexOf('.'));
 
   afterEach(function () {
     fixture.innerHTML = '';
@@ -61,25 +62,25 @@ describe('axe.configure', function () {
 
   it('should throw error if rules property is invalid', function () {
     assert.throws(function () {
-      axe.configure({ rules: 'hello' }),
+      (axe.configure({ rules: 'hello' }),
         TypeError,
-        /^Rules property must be an array/;
+        /^Rules property must be an array/);
     });
   });
 
   it('should throw error if rule is invalid', function () {
     assert.throws(function () {
-      axe.configure({ rules: ['hello'] }),
+      (axe.configure({ rules: ['hello'] }),
         TypeError,
-        /Configured rule "hello" is invalid/;
+        /Configured rule "hello" is invalid/);
     });
   });
 
   it('should throw error if rule does not have an id', function () {
     assert.throws(function () {
-      axe.configure({ rules: [{ foo: 'bar' }] }),
+      (axe.configure({ rules: [{ foo: 'bar' }] }),
         TypeError,
-        /Configured rule "{foo:\"bar\"}" is invalid/;
+        /Configured rule "{foo:\"bar\"}" is invalid/);
     });
   });
 
@@ -191,25 +192,25 @@ describe('axe.configure', function () {
 
   it('should throw error if checks property is invalid', function () {
     assert.throws(function () {
-      axe.configure({ checks: 'hello' }),
+      (axe.configure({ checks: 'hello' }),
         TypeError,
-        /^Checks property must be an array/;
+        /^Checks property must be an array/);
     });
   });
 
   it('should throw error if check is invalid', function () {
     assert.throws(function () {
-      axe.configure({ checks: ['hello'] }),
+      (axe.configure({ checks: ['hello'] }),
         TypeError,
-        /Configured check "hello" is invalid/;
+        /Configured check "hello" is invalid/);
     });
   });
 
   it('should throw error if check does not have an id', function () {
     assert.throws(function () {
-      axe.configure({ checks: [{ foo: 'bar' }] }),
+      (axe.configure({ checks: [{ foo: 'bar' }] }),
         TypeError,
-        /Configured check "{foo:\"bar\"}" is invalid/;
+        /Configured check "{foo:\"bar\"}" is invalid/);
     });
   });
 
