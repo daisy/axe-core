@@ -1,3 +1,28 @@
+DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
+
+* `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm install --foreground-scripts --ignore-scripts`
+
+// * `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm run prepare && cd ../..`
+// * `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; npm run prepare --foreground-scripts; cd ../..`
+
+* `npm run build`
+* `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
+
+`--ignore-scripts` must be used, see:
+aria-practices@0.0.0 prepare
+fsevents@2.3.2 install
+pre-commit@1.2.2 install
+spawn-sync@1.0.15 postinstall
+act-tools@1.0.0 postinstall
+act-tools@1.0.0 prebuild
+act-tools@1.0.0 build
+act-tools@1.0.0 prepare
+==> husky install!! (not skipped by `export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0;` ???)
+https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a927a/package.json#L21C17-L21C22
+/// `export PATH="${PWD}/husky-hack:${PATH}";`
+
+`npm cache clean --force` and/or `rm -f .git/hooks/pre-commit` might be necessary.
+
 # axe-core
 
 [![License](https://img.shields.io/npm/l/axe-core.svg?color=c41)](LICENSE)
