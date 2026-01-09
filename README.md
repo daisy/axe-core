@@ -1,10 +1,6 @@
 DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
 
 * `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm install --foreground-scripts --ignore-scripts`
-
-// * `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm run prepare && cd ../..`
-// * `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; npm run prepare --foreground-scripts; cd ../..`
-
 * `npm run build`
 * `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
 
@@ -22,6 +18,9 @@ https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a
 /// `export PATH="${PWD}/husky-hack:${PATH}";`
 
 `npm cache clean --force` and/or `rm -f .git/hooks/pre-commit` might be necessary.
+
+// * `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm run prepare && cd ../..`
+// * `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; npm run prepare --foreground-scripts; cd ../..`
 
 # axe-core
 
