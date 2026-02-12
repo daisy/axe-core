@@ -2,8 +2,13 @@ DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fai
 
 - `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm install --foreground-scripts --ignore-scripts`
 - `npm run build`
-- `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
 - `npx husky`
+- `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
+- `cat ~/.browser-driver-manager/.env`
+- `source ~/.browser-driver-manager/.env`
+- `env | grep -i CHROME`
+- `echo $CHROME_TEST_PATH`
+- `export CHROME_BIN="${CHROME_TEST_PATH}"`
 - `npm run test:chromeheadless`
 - `npm run test:chrome`
 
@@ -23,6 +28,14 @@ https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a
 
 // _ `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm run prepare && cd ../..`
 // _ `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; npm run prepare --foreground-scripts; cd ../..`
+
+`~/.browser-driver-manager/.env`
+==>
+```
+CHROME_TEST_PATH="/Users/U/.browser-driver-manager/chrome/mac_arm-145.0.7632.46/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+CHROMEDRIVER_TEST_PATH="/Users/U/.browser-driver-manager/chromedriver/mac_arm-145.0.7632.46/chromedriver-mac-arm64/chromedriver"
+CHROME_TEST_VERSION="145.0.7632.46"
+```
 
 # axe-core
 
