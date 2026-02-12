@@ -4,6 +4,8 @@ DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fai
 - `npm run build`
 - `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
 - `npx husky`
+- `npm run test:chromeheadless`
+- `npm run test:chrome`
 
 `--ignore-scripts` must be used, see:
 aria-practices@0.0.0 prepare
