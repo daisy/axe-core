@@ -5,12 +5,18 @@ DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fai
 - `npx husky`
 - `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
 - `cat ~/.browser-driver-manager/.env`
-- `source ~/.browser-driver-manager/.env`
-- `env | grep -i CHROME`
-- `echo $CHROME_TEST_PATH`
-- `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- /// `source ~/.browser-driver-manager/.env`
+- /// `env | grep -i CHROME`
+- /// `echo $CHROME_TEST_PATH`
+- /// `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
 - `npm run test:chromeheadless`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
 - `npm run test:chrome`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
 
 `--ignore-scripts` must be used, see:
 aria-practices@0.0.0 prepare
