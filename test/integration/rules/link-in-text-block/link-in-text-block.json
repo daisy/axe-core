@@ -1,10 +1,11 @@
 {
   "description": "link-in-text-block tests",
   "rule": "link-in-text-block",
-  "violations": [["#fail-insufficient-text-contrast"]],
+  "violations": [
+    ["#fail-insufficient-text-contrast"],
+    ["#fail-insufficient-background-contrast"]
+  ],
   "passes": [
-    ["#fail-insufficient-background-contrast"],
-    ["#incomplete-pseudo-before"],
     ["#pass-default-styling"],
     ["#pass-default-styling-aria-hidden"],
     ["#pass-different-weight"],
@@ -13,5 +14,8 @@
     ["#pass-text-color"],
     ["#pass-same-colors"]
   ],
-  "incomplete": [["#incomplete-low-contrast-parent-has-gradient"]]
+  "incomplete": [
+    ["#incomplete-pseudo-before"],
+    ["#incomplete-low-contrast-parent-has-gradient"]
+  ]
 }
