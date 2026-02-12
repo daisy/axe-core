@@ -15,6 +15,8 @@ var testDirs = [
   // npm run test:unit -- --browsers ChromeHeadless testFiles=test/checks/color/color-contrast.js
   'api',
   'integration',
+  // npx start-server-and-test 9876 "npm run integration browser=Chrome" ==> SEE test-webdriver.js, const testUrls = globSync...
+
   // npm run test:unit -- --browsers Chrome testDirs=integration
   // npm run test:unit -- --browsers ChromeHeadless testDirs=integration
 
@@ -29,7 +31,6 @@ var testDirs = [
 
   // npm run test:unit -- --browsers Chrome testFiles=test/integration/full/contrast/prototype.js
   // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/full/contrast/prototype.js
-  // npx start-server-and-test 9876 "npm run integration browser=ChromeHeadless"
 
   // npm run test:unit -- --browsers Chrome testFiles=test/integration/full/preload/preload.js
   // npm run test:unit -- --browsers ChromeHeadless testFiles=test/integration/full/preload/preload.js
