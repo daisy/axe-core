@@ -1,6 +1,15 @@
 {
   "compilerOptions": {
     "noImplicitAny": true
+    // "module": "esnext", // 99
+    // "module": "ES2020", // 6
+    // "module": "preserve", // 200
+    // "module": "nodenext", // 199
+    // "moduleResolution": "nodenext", // 99
+    // "moduleResolution": "node" // 100
+    // "moduleResolution": "bundler", // 100
+    // "lib": ["es2022", "dom"]
+    // "target": "esnext"
   },
   "include": ["typings/axe-core/axe-core-tests.ts"],
   "exclude": ["node_modules"]

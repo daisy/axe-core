@@ -175,17 +175,20 @@ function start(options) {
 
   const testUrls = globSync(
     [
+      // 'test/integration/full/no-autoplay-audio/**/*.{html,xhtml}'
       'test/integration/full/**/*.{html,xhtml}'
       // 'test/integration/full/contrast/**/*.{html,xhtml}'
       // 'test/integration/full/patch/**/*.{html,xhtml}'
       // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
       // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
-
       // 'test/integration/full/**/*__.xhtml',
       // 'test/integration/full/**/*.html',
     ],
     {
-      ignore: '**/frames/**/*.{html,xhtml}' // '**/frames/**/*.html'
+      ignore: [
+        '**/frames/**/*.{html,xhtml}',
+        '**/no-autoplay-audio/*.{html,xhtml}' // Chrome 145+ (currently 147)
+      ] // '**/frames/**/*.html'
     }
   ).map(url => {
     return 'http://localhost:9876/' + url;

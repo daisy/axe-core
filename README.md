@@ -8,10 +8,12 @@ DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fai
 - `npx husky`
 - `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
 - `cat ~/.browser-driver-manager/.env`
-- /// `source ~/.browser-driver-manager/.env`
-- /// `env | grep -i CHROME`
-- /// `echo $CHROME_TEST_PATH`
-- /// `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- `source ~/.browser-driver-manager/.env`
+- `env | grep -i CHROME`
+- `echo $CHROME_TEST_PATH`
+- `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- `echo $CHROMEDRIVER_TEST_PATH`
+- `export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}"`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 - `npm run test:chromeheadless`
@@ -40,6 +42,7 @@ https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a
 
 `~/.browser-driver-manager/.env`
 ==>
+
 ```
 CHROME_TEST_PATH="/Users/U/.browser-driver-manager/chrome/mac_arm-145.0.7632.46/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
 CHROMEDRIVER_TEST_PATH="/Users/U/.browser-driver-manager/chromedriver/mac_arm-145.0.7632.46/chromedriver-mac-arm64/chromedriver"

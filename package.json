@@ -129,7 +129,7 @@
     "@babel/preset-env": "^7.29.2",
     "@babel/runtime-corejs3": "^7.29.2",
     "@deque/dot": "^1.1.5",
-    "@types/node": "^4.9.5",
+    "@types/node": "^24.12.2",
     "aria-practices": "github:w3c/aria-practices#ce0336bd82d7d3651abcbde86af644197ddbc629",
     "aria-query": "^5.3.2",
     "browser-driver-manager": "2.0.1",
@@ -191,7 +191,7 @@
     "start-server-and-test": "^2.1.5",
     "taze": "^19.11.0",
     "typedarray": "^0.0.7",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "uglify-js": "^3.19.3",
     "wcag-act-rules": "github:w3c/wcag-act-rules#5adb55d19eb2cd7fb23213b2d1acedf9004dc063",
     "weakmap-polyfill": "^2.0.4"
