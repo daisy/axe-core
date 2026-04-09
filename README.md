@@ -1,3 +1,54 @@
+DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
+
+- `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw npm install --foreground-scripts --ignore-scripts`
+- `npm audit`
+- `npm outdated`
+- `((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
+- `npm run build`
+- `npx husky`
+- `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
+- `cat ~/.browser-driver-manager/.env`
+- `source ~/.browser-driver-manager/.env`
+- `env | grep -i CHROME`
+- `echo $CHROME_TEST_PATH`
+- `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- `echo $CHROMEDRIVER_TEST_PATH`
+- `export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}"`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
+- `npm run test:chromeheadless`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
+- `npm run test:chrome`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
+
+`--ignore-scripts` must be used, see:
+aria-practices@0.0.0 prepare
+fsevents@2.3.2 install
+pre-commit@1.2.2 install
+spawn-sync@1.0.15 postinstall
+act-tools@1.0.0 postinstall
+act-tools@1.0.0 prebuild
+act-tools@1.0.0 build
+act-tools@1.0.0 prepare
+==> husky install!! (not skipped by `export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0;` ???)
+https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a927a/package.json#L21C17-L21C22
+
+`npm cache clean --force` and/or `rm -f .git/hooks/pre-commit` might be necessary.
+
+// _ `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm run prepare && cd ../..`
+// _ `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; npm run prepare --foreground-scripts; cd ../..`
+
+`~/.browser-driver-manager/.env`
+==>
+
+```
+CHROME_TEST_PATH="/Users/U/.browser-driver-manager/chrome/mac_arm-145.0.7632.46/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+CHROMEDRIVER_TEST_PATH="/Users/U/.browser-driver-manager/chromedriver/mac_arm-145.0.7632.46/chromedriver-mac-arm64/chromedriver"
+CHROME_TEST_VERSION="145.0.7632.46"
+```
+
 # axe-core
 
 [![License](https://img.shields.io/npm/l/axe-core.svg?color=c41)](LICENSE)

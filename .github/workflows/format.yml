@@ -1,34 +1,45 @@
 name: Formatter
 
 on:
-  pull_request:
+  push:
     branches:
-      - develop
-
+      - xxxxxxxxxxxxxxxxxxxxxxxxx
 jobs:
-  prettier:
-    # This conditional prevents running the job on PRs from forks; won't
-    # have permissions to commit changes, so the job would fail if it ran.
-    # PRs from forks will instead rely on failing the fmt_check job in test.yml
-    if: github.event.pull_request.head.repo.full_name == github.repository
+  skip:
+    if: ${{ false }}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Install dependencies
-        run: npm ci
-      - uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: 'npm'
-      # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
-      - name: Prevent workflows from being formatted
-        run: echo ".github" >> .prettierignore && cat .prettierignore
-      - run: npm run fmt
-      # Prevent the prettierignore change from being committed.
-      - run: git checkout .prettierignore
-      - uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # tag=v5
-        with:
-          commit_message: ':robot: Automated formatting fixes'
+      - run: echo OK
+
+# on:
+#   pull_request:
+#     branches:
+#       - develop
+
+# jobs:
+#   prettier:
+#     # This conditional prevents running the job on PRs from forks; won't
+#     # have permissions to commit changes, so the job would fail if it ran.
+#     # PRs from forks will instead rely on failing the fmt_check job in test.yml
+#     if: ${{ false }} # github.event.pull_request.head.repo.full_name == github.repository
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
+#     steps:
+#       - uses: actions/checkout@v6
+#         with:
+#           ref: ${{ github.event.pull_request.head.ref }}
+#       - name: Install dependencies
+#         run: npm ci
+#       - uses: actions/setup-node@v6
+#         with:
+#           node-version-file: .nvmrc
+#           cache: 'npm'
+#       # Workflows are not allowed to edit workflows. As result, we need to prevent Prettier from formatting them.
+#       - name: Prevent workflows from being formatted
+#         run: echo ".github" >> .prettierignore && cat .prettierignore
+#       - run: npm run fmt
+#       # Prevent the prettierignore change from being committed.
+#       - run: git checkout .prettierignore
+#       - uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # tag=v5
+#         with:
+#           commit_message: ':robot: Automated formatting fixes'
