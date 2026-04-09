@@ -8,9 +8,11 @@ const chromedriverPath =
   process.env.CHROMEDRIVER_BIN ||
   process.env.CHROMEDRIVER_TEST_PATH ||
   chromedriver.path ||
-  process.env.CHROME_BIN;
+  process.env.CHROMEWEBDRIVER ||
+  process.env.CHROME_BIN ||
+  process.env.CHROME_TEST_PATH;
 console.log(
-  `CHROME DRIVER (get) === ${chromedriverPath} (${process.env.CHROMEDRIVER_BIN} / ${process.env.CHROMEDRIVER_TEST_PATH} / ${chromedriver.path} / ${process.env.CHROME_BIN}}) [${process.env.CHROME_TEST_VERSION}] ** ${process.env.CHROME_TEST_PATH}`
+  `CHROME DRIVER (get) === ${chromedriverPath} (${process.env.CHROMEDRIVER_BIN} / ${process.env.CHROMEDRIVER_TEST_PATH} / ${chromedriver.path} / ${process.env.CHROME_BIN}}) [${process.env.CHROME_TEST_VERSION}] ** ${process.env.CHROME_TEST_PATH} !! ${process.env.CHROMEWEBDRIVER}`
 );
 
 const getWebdriver = () => {

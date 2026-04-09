@@ -2,8 +2,8 @@ name: Add extension and linting labels to associated opened issues
 
 on:
   push:
-  branches:
-    - xxxxxxxxxxxxxxxxxxxxxxxxx
+    branches:
+      - xxxxxxxxxxxxxxxxxxxxxxxxx
 jobs:
   skip:
     if: ${{ false }}

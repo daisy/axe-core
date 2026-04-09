@@ -2,8 +2,8 @@ name: Nightly Tests
 
 on:
   push:
-  branches:
-    - xxxxxxxxxxxxxxxxxxxxxxxxx
+    branches:
+      - xxxxxxxxxxxxxxxxxxxxxxxxx
 jobs:
   skip:
     if: ${{ false }}

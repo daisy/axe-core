@@ -2,8 +2,8 @@ name: Semantic PR title
 
 on:
   push:
-  branches:
-    - xxxxxxxxxxxxxxxxxxxxxxxxx
+    branches:
+      - xxxxxxxxxxxxxxxxxxxxxxxxx
 jobs:
   skip:
     if: ${{ false }}

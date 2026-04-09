@@ -2,8 +2,8 @@ name: Update generated files
 
 on:
   push:
-  branches:
-    - xxxxxxxxxxxxxxxxxxxxxxxxx
+	  branches:
+	    - xxxxxxxxxxxxxxxxxxxxxxxxx
 jobs:
   skip:
     if: ${{ false }}

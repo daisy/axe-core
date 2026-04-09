@@ -203,7 +203,7 @@ module.exports = function (config) {
     customLaunchers: {
       ChromeDebugging: {
         base: 'Chrome',
-        flags: ['--remote-debugging-port=' + debugPort]
+        flags: ['--no-sandbox', '--remote-debugging-port=' + debugPort]
       }
     }
   });
