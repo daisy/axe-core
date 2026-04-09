@@ -1,6 +1,9 @@
 DEV: `HUSKY=0 npm i` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
 
-- `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm install --foreground-scripts --ignore-scripts`
+- `rm -rf node_modules/ && rm -f package-lock.json && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw npm install --foreground-scripts --ignore-scripts`
+- `npm audit`
+- `npm outdated`
+- `((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
 - `npm run build`
 - `npx husky`
 - `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
