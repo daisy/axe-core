@@ -4,6 +4,12 @@ on:
   push:
   branches:
     - xxxxxxxxxxxxxxxxxxxxxxxxx
+jobs:
+  skip:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo OK
 
 # on:
 #   push:

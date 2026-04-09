@@ -6,6 +6,12 @@ on:
   push:
   branches:
     - xxxxxxxxxxxxxxxxxxxxxxxxx
+jobs:
+  skip:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo OK
 
 # on:
 #   # Run on push and not `workflow_run` after tests finish.
