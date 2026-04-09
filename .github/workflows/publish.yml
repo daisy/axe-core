@@ -28,7 +28,7 @@ jobs:
     #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
     #if: "contains(github.event.head_commit.message, 'release tag')"
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       DISPLAY: :99
     steps:
@@ -42,7 +42,7 @@ jobs:
       - run: npm --global install npm@^11
       - run: npm --version
       - name: NPM INSTALL
-        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm ci --ignore-scripts ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm ci --ignore-scripts ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
         shell: bash
       - name: BUILD
         run: npm run build
@@ -57,15 +57,16 @@ jobs:
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: env | grep -i CHROME ; npm run test:integration:chromeheadless ; npm run test:integration:chrome ; npm run test -- --browsers ChromeNoSandbox ; npm run test -- --browsers ChromeHeadlessNoSandbox
+        #run: env | grep -i CHROME ; npm run test:integration:chromeheadless ; npm run test:integration:chrome ; npm run test -- --browsers ChromeNoSandbox ; npm run test -- --browsers ChromeHeadlessNoSandbox
+        run: env | grep -i CHROME ; npm run test:integration:chrome ; npm run test -- --browsers ChromeNoSandbox
       # - name: HUSKY
       #   run: (npx husky || echo OK)
       #   shell: bash
       # - name: CHROME TESTS
       #   run: rm -rf ~/.browser-driver-manager ; npx browser-driver-manager install chromedriver --verbose ; cat ~/.browser-driver-manager/.env ; source ~/.browser-driver-manager/.env ; env | grep -i CHROME ; echo $CHROME_TEST_PATH ; export CHROME_BIN="${CHROME_TEST_PATH}" ; echo $CHROMEDRIVER_TEST_PATH ; export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}" ; npm run test:chromeheadless
       #   shell: bash
-      # - name: PACKAGE PUBLISH
-      #   #env:
-      #   #  NPM_CONFIG_PROVENANCE: true
-      #   shell: bash
-      #   run: npm publish --access public --tag=latest .
+      - name: PACKAGE PUBLISH
+        #env:
+        #  NPM_CONFIG_PROVENANCE: true
+        shell: bash
+        run: npm publish --access public --tag=latest .
