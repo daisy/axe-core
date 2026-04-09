@@ -57,7 +57,7 @@ jobs:
         env:
           CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
           CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: env | grep -i CHROME ; npm run test:integration:chrome ; npm run test -- --browsers Chrome
+        run: env | grep -i CHROME ; npm run test:integration:chromeheadless ; npm run test:integration:chrome ; npm run test -- --browsers ChromeNoSandbox ; npm run test -- --browsers ChromeHeadlessNoSandbox
       # - name: HUSKY
       #   run: (npx husky || echo OK)
       #   shell: bash
