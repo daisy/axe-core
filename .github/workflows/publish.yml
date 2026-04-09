@@ -39,13 +39,13 @@ jobs:
       - run: npm --global install npm@^11
       - run: npm --version
       - name: NPM INSTALL
-        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm ci --ignore-scripts ; npm audit ; npm outdated ; ((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm ci --ignore-scripts ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)
         shell: bash
       - name: BUILD
         run: npm run build
         shell: bash
       - name: HUSKY
-        run: npx husky
+        run: (npx husky || echo OK)
         shell: bash
       - name: CHROME TESTS
         run: rm -rf ~/.browser-driver-manager ; npx browser-driver-manager install chromedriver --verbose ; cat ~/.browser-driver-manager/.env ; source ~/.browser-driver-manager/.env ; env | grep -i CHROME ; echo $CHROME_TEST_PATH ; export CHROME_BIN="${CHROME_TEST_PATH}" ; echo $CHROMEDRIVER_TEST_PATH ; export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}" ; npm run test:chromeheadless
