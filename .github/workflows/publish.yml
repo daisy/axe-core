@@ -1,0 +1,72 @@
+#
+# https://docs.npmjs.com/trusted-publishers
+#
+
+#GIT_COMMITTER_DATE="$(git show v4.11.1_DAISY --format=%aD | head -1)" git tag -a "v4.11.1-canary.2" v4.11.1_DAISY -m "release tag v4.11.1-canary.2" && git push --tags origin v4.11.1_DAISY && git --no-pager tag --list --format='%(refname)   %(taggerdate)'
+
+#git tag -d v4.11.1-canary.2 && git push origin :refs/tags/v4.11.1-canary.2
+
+name: Publish Package
+
+#on:
+#  release:
+#    types: [published]
+
+on:
+  push:
+    #branches: [v4.11.1_DAISY]
+    tags:
+      # https://github.com/daisy/ace/settings/rules
+      - 'v*' # excludes slash /
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  publish:
+    #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
+    #if: "contains(github.event.head_commit.message, 'release tag')"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      DISPLAY: :99
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # cache: npm
+      - run: node --version ; npm --version
+      - run: npm --global install npm@^11
+      - run: npm --version
+      - name: NPM INSTALL
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm ci --ignore-scripts ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
+        shell: bash
+      - name: BUILD
+        run: npm run build
+        shell: bash
+      - &install-deps-with-xvfb
+        name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: CHROME TESTS
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        #run: env | grep -i CHROME ; npm run test:integration:chromeheadless ; npm run test:integration:chrome ; npm run test -- --browsers ChromeNoSandbox ; npm run test -- --browsers ChromeHeadlessNoSandbox
+        run: env | grep -i CHROME ; npm run test:integration:chrome ; npm run test -- --browsers ChromeNoSandbox
+      # - name: HUSKY
+      #   run: (npx husky || echo OK)
+      #   shell: bash
+      # - name: CHROME TESTS
+      #   run: rm -rf ~/.browser-driver-manager ; npx browser-driver-manager install chromedriver --verbose ; cat ~/.browser-driver-manager/.env ; source ~/.browser-driver-manager/.env ; env | grep -i CHROME ; echo $CHROME_TEST_PATH ; export CHROME_BIN="${CHROME_TEST_PATH}" ; echo $CHROMEDRIVER_TEST_PATH ; export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}" ; npm run test:chromeheadless
+      #   shell: bash
+      - name: PACKAGE PUBLISH
+        #env:
+        #  NPM_CONFIG_PROVENANCE: true
+        shell: bash
+        run: npm publish --access public --tag=latest .

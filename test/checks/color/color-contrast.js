@@ -169,7 +169,12 @@ describe('color-contrast', function () {
     assert.isTrue(contrastEvaluate.apply(checkContext, params));
     assert.deepEqual(checkContext._relatedNodes, []);
   });
-
+  //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/130.0.0.0 Safari/537.36"
+  //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+  // console.log(JSON.stringify(navigator.userAgent, null, 4), JSON.stringify(Object.keys(window.mocha), null, 4), JSON.stringify(window.mocha.context, null, 4), JSON.stringify(window.mocha.options, null, 4), JSON.stringify(window.chai, null, 4));
+  // navigator.userAgent.includes('HeadlessChrome') &&
+  // =>
+  // <p style="color: black; background-color: white;">
   it('should return true for inline elements with sufficient contrast spanning multiple lines', function () {
     var params = checkSetup(
       '<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>'
@@ -1064,7 +1069,7 @@ describe('color-contrast', function () {
       var params = checkSetup(`
         <div id="target" style="
           background-color: #aaa;
-          color:#666; 
+          color:#666;
           text-shadow: 1px 1px #000;
         "> Hello world </div>
       `);

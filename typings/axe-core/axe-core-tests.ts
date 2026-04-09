@@ -18,10 +18,13 @@ axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
   console.log(results.incomplete.length);
   const errors = results.incomplete.map(result => result.error);
   console.log(
-    errors.map(
-      ({ message, stack, ruleId, method }) =>
-        `${message} ${ruleId} ${method}\n\n${stack}`
-    )
+    errors.map(err => {
+      if (err) {
+        const { message, stack, ruleId, method } = err;
+        return `${message} ${ruleId} ${method}\n\n${stack}`;
+      }
+      return 'UNDEFINED err';
+    })
   );
   console.log(results.inapplicable.length);
   console.log(results.violations.length);
@@ -57,7 +60,7 @@ export async function runAsync() {
   await axe.run([[['main']]]);
   await axe.run([[['#app', 'main']]]); // Selecting in the outer frame
 
-  await axe.run(document.querySelector('main'));
+  await axe.run(document.querySelector('main') as unknown as Node | undefined);
   await axe.run(document.querySelectorAll('main'));
   // axe.run with frameContext context
   await axe.run({ fromShadowDom: ['#app', '#main', '#inner'] });
@@ -409,7 +412,8 @@ let fooReporter = (
   resolve: (out: 'foo') => void,
   reject: (err: Error) => void
 ) => {
-  reject && resolve('foo');
+  // reject &&
+  resolve('foo');
 };
 
 axe.addReporter<'foo'>('foo', fooReporter, true);
@@ -465,7 +469,7 @@ axe.utils.nodeSerializer.update({
     return axe.utils.DqElement.mergeSpecs(childSpec, parentSpec);
   }
 });
-const spec2: axe.SerialDqElement = axe.utils.nodeSerializer.toSpec(element);
+const spec2: axe.SerialDqElement = axe.utils.nodeSerializer.toSpec(element!);
 const spec3: axe.SerialDqElement = axe.utils.nodeSerializer.dqElmToSpec(
   dqElement,
   options
