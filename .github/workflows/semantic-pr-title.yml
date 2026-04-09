@@ -1,16 +1,21 @@
 name: Semantic PR title
 
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - edited
-      - synchronize
+  push:
+  branches:
+    - xxxxxxxxxxxxxxxxxxxxxxxxx
 
-jobs:
-  semantic-pr-title:
-    if: ${{ false }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: dequelabs/semantic-pr-title@v1
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - reopened
+#       - edited
+#       - synchronize
+
+# jobs:
+#   semantic-pr-title:
+#     if: ${{ false }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: dequelabs/semantic-pr-title@v1
