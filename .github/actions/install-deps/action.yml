@@ -68,8 +68,9 @@ runs:
     # - name: Install Project Dependencies
     #   shell: bash
     #   run: npm ci
-    - run: |
-        ${{ steps.setup-chrome.outputs.chrome-path }} --version
+    - name: CHROME Version
+      run: ${{ steps.setup-chrome.outputs.chrome-path }} --version
+      shell: bash
     - name: Start Xvfb
       if: ${{ inputs.start-xvfb }}
       env:
