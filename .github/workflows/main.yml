@@ -1,0 +1,90 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [v4.11.2_DAISY]
+    tags-ignore:
+      - '*'
+  pull_request:
+    branches: [v4.11.2_DAISY]
+
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions:
+  actions: none
+  artifact-metadata: none
+  attestations: none
+  checks: none
+  contents: none # <==========
+  deployments: none
+  discussions: none
+  id-token: none
+  issues: none
+  models: none
+  packages: none
+  pages: none
+  pull-requests: none
+  repository-projects: none
+  security-events: none
+  statuses: none
+
+jobs:
+  publish:
+    permissions:
+      actions: none
+      artifact-metadata: none
+      attestations: none
+      checks: none
+      contents: read # <==========
+      deployments: none
+      discussions: none
+      id-token: write
+      issues: none
+      models: none
+      packages: none
+      pages: none
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+    #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
+    #if: "contains(github.event.head_commit.message, 'release tag')"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      DISPLAY: :99
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # cache: npm
+      - run: node --version ; npm --version
+      - run: npm --global install npm@^11
+      - run: npm --version
+      - name: NPM INSTALL
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 npm ci --ignore-scripts ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
+        shell: bash
+      - name: BUILD
+        run: npm run build
+        shell: bash
+      - &install-deps-with-xvfb
+        name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: CHROME TESTS
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: env | grep -i CHROME ; npm run test:integration:chrome ; npm run test:integration:chromeheadless ; npm run test -- --browsers ChromeNoSandbox ; npm run test -- --browsers ChromeHeadlessNoSandbox
+      # - name: HUSKY
+      #   run: (npx husky || echo OK)
+      #   shell: bash
+      # - name: CHROME TESTS
+      #   run: rm -rf ~/.browser-driver-manager ; npx browser-driver-manager install chromedriver --verbose ; cat ~/.browser-driver-manager/.env ; source ~/.browser-driver-manager/.env ; env | grep -i CHROME ; echo $CHROME_TEST_PATH ; export CHROME_BIN="${CHROME_TEST_PATH}" ; echo $CHROMEDRIVER_TEST_PATH ; export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}" ; npm run test:chromeheadless
+      #   shell: bash
