@@ -29,7 +29,7 @@ permissions:
   statuses: none
 
 jobs:
-  publish:
+  build_test:
     permissions:
       actions: none
       artifact-metadata: none
