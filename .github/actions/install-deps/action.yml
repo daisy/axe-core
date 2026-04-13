@@ -57,7 +57,7 @@ runs:
       uses: browser-actions/setup-chrome@v2
       with:
         # @see https://github.com/dequelabs/axe-core/issues/5027
-        chrome-version: latest # ${{ inputs.nightly == 'true' && 'beta' || 145 }}
+        chrome-version: stable # ${{ inputs.nightly == 'true' && 'beta' || 145 }}
         install-chromedriver: true
         install-dependencies: true
     # - name: Install Firefox
