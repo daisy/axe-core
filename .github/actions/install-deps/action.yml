@@ -57,7 +57,7 @@ runs:
       uses: browser-actions/setup-chrome@v2
       with:
         # @see https://github.com/dequelabs/axe-core/issues/5027
-        chrome-version: 146 # ${{ inputs.nightly == 'true' && 'beta' || 145 }}
+        chrome-version: latest # ${{ inputs.nightly == 'true' && 'beta' || 145 }}
         install-chromedriver: true
         install-dependencies: true
     # - name: Install Firefox
@@ -68,6 +68,8 @@ runs:
     # - name: Install Project Dependencies
     #   shell: bash
     #   run: npm ci
+    - run: |
+        ${{ steps.setup-chrome.outputs.chrome-path }} --version
     - name: Start Xvfb
       if: ${{ inputs.start-xvfb }}
       env:
