@@ -54,7 +54,10 @@ runs:
         sudo apt-get install -y xvfb x11-xserver-utils
     - name: Install Google Chrome for Testing
       id: setup-chrome
-      uses: browser-actions/setup-chrome@v2
+      # https://github.com/browser-actions/setup-chrome/commits/v2.1.1
+      # https://github.com/browser-actions/setup-chrome/commits/4f8e94349a351df0f048634f25fec36c3c91eded
+      # https://github.com/browser-actions/setup-chrome/compare/v2.1.1...4f8e94349a351df0f048634f25fec36c3c91eded
+      uses: browser-actions/setup-chrome@4f8e94349a351df0f048634f25fec36c3c91eded
       with:
         # @see https://github.com/dequelabs/axe-core/issues/5027
         chrome-version: stable # ${{ inputs.nightly == 'true' && 'beta' || 145 }}
