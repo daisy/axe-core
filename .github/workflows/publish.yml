@@ -1,0 +1,124 @@
+#
+# https://docs.npmjs.com/trusted-publishers
+#
+
+#GIT_COMMITTER_DATE="$(git show v4.13.0_DAISY --format=%aD | head -1)" git tag -a "v4.13.0-canary.1" v4.13.0_DAISY -m "release tag v4.13.0-canary.1" && git push --tags origin v4.13.0_DAISY && git --no-pager tag --list --format='%(refname)   %(taggerdate)'
+
+#git tag -d v4.13.0-canary.1 && git push origin :refs/tags/v4.13.0-canary.1
+
+name: Publish Package
+
+#on:
+#  release:
+#    types: [published]
+
+on:
+  push:
+    #branches: [v4.13.0_DAISY]
+    tags:
+      # https://github.com/daisy/ace/settings/rules
+      - 'v*' # excludes slash /
+
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions:
+  actions: none
+  artifact-metadata: none
+  attestations: none
+  checks: none
+  contents: none # <==========
+  deployments: none
+  discussions: none
+  id-token: none # <==========
+  issues: none
+  models: none
+  packages: none
+  pages: none
+  pull-requests: none
+  repository-projects: none
+  security-events: none
+  statuses: none
+
+jobs:
+  publish:
+    permissions:
+      actions: none
+      artifact-metadata: none
+      attestations: none
+      checks: none
+      contents: read # <==========
+      deployments: none
+      discussions: none
+      id-token: write # <========== Trusted Publishing OpenID Connect
+      issues: none
+      models: none
+      packages: none
+      pages: none
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+    #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
+    #if: "contains(github.event.head_commit.message, 'release tag')"
+    if: "github.event_name != 'pull_request' && github.ref_name == 'v4.13.0_DAISY' && github.repository_owner == 'daisy'"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      DISPLAY: :99
+    steps:
+      # https://github.com/actions/checkout/commits/v6.0.2
+      # https://github.com/actions/checkout/commits/de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      # https://github.com/actions/checkout/compare/v6.0.2...de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      # https://github.com/actions/setup-node/commits/v6.4.0
+      # https://github.com/actions/setup-node/commits/48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+      # https://github.com/actions/setup-node/compare/v6.4.0...48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # cache: npm
+      - run: node --version ; npm --version
+      - run: npm --global install npm@^12
+      - run: npm --version
+      - run: npm --global install pnpm@^11
+      - run: pnpm --version
+      - name: (P)NPM INSTALL
+ # ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((pnpm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && pnpm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm ci
+        shell: bash
+      - name: BUILD
+        run: pnpm run build
+        shell: bash
+      - &install-deps-with-xvfb
+        name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: CHROME TESTS
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        #run: env | grep -i CHROME ; pnpm run test:integration:chromeheadless ; pnpm run test:integration:chrome ; pnpm run test -- --browsers ChromeNoSandbox ; pnpm run test -- --browsers ChromeHeadlessNoSandbox
+        run: env | grep -i CHROME ; pnpm run test:integration:chrome ; pnpm run test -- --browsers ChromeNoSandbox
+      # - name: HUSKY
+      #   run: (npx husky || echo OK)
+      #   shell: bash
+      # - name: CHROME TESTS
+      #   run: rm -rf ~/.browser-driver-manager ; npx browser-driver-manager install chromedriver --verbose ; cat ~/.browser-driver-manager/.env ; source ~/.browser-driver-manager/.env ; env | grep -i CHROME ; echo $CHROME_TEST_PATH ; export CHROME_BIN="${CHROME_TEST_PATH}" ; echo $CHROMEDRIVER_TEST_PATH ; export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}" ; npm run test:chromeheadless
+      #   shell: bash
+      - name: PACKAGE PUBLISH
+        #env:
+        #  NPM_CONFIG_PROVENANCE: true
+        shell: bash
+        run: npm publish --access public --tag=latest .
+
+#TECHNICAL NOTE: IT IS POSSIBLE TO RETRIVEVE NPM_TOKEN VIA AN OPENIDCONNECT ENDPOINT (DO NOT DO THIS!)
+#OIDC_TOKEN=$(curl -sH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" | jq -r .value)
+#NPM_TOKEN=$(curl -s -X POST https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/%40daisy%2Faxe-core-for-ace -H "Content-Type: application/json" -H "Authorization: Bearer $OIDC_TOKEN" -d "{\"oidcToken\":\"$OIDC_TOKEN\"}" | jq -r .token)
+#THIS LEAKS THE SECRET IN LOGS: echo $NPM_TOKEN | base64 -w 0 | base64 -w 0
+#npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+#npm publish...

@@ -296,6 +296,7 @@ function validateRule({ tags, metadata }) {
 const miscTags = ['ACT', 'experimental', 'review-item', 'deprecated'];
 
 const categories = [
+  'epub',
   'aria',
   'color',
   'forms',

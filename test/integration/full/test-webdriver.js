@@ -1,8 +1,20 @@
 const { globSync } = require('glob');
 const chrome = require('selenium-webdriver/chrome');
 const firefox = require('selenium-webdriver/firefox');
-const chromedriver =
-  process.env.CHROMEDRIVER_BIN ?? require('chromedriver').path;
+
+const chromedriver = require('chromedriver');
+// rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose
+require('dotenv').config({ path: '~/.browser-driver-manager/.env' });
+const chromedriverPath =
+  process.env.CHROMEDRIVER_BIN ||
+  process.env.CHROMEDRIVER_TEST_PATH ||
+  chromedriver.path ||
+  process.env.CHROMEWEBDRIVER ||
+  process.env.CHROME_BIN ||
+  process.env.CHROME_TEST_PATH;
+console.log(
+  `CHROME DRIVER (get) === ${chromedriverPath} (${process.env.CHROMEDRIVER_BIN} / ${process.env.CHROMEDRIVER_TEST_PATH} / ${chromedriver.path} / ${process.env.CHROME_BIN}) [${process.env.CHROME_TEST_VERSION}] ** ${process.env.CHROME_TEST_PATH} !! ${process.env.CHROMEWEBDRIVER}`
+);
 
 const args = process.argv.slice(2);
 
@@ -92,8 +104,8 @@ function runTestUrls(driver, isMobile, urls, errors) {
         });
 
         // Log the result of the page tests
-        console[result.failures ? 'error' : 'log'](`passes: ${result.passes}, 
-          failures: ${result.failures}, 
+        console[result.failures ? 'error' : 'log'](`passes: ${result.passes},
+          failures: ${result.failures},
           duration: ${result.duration / 1000}s`);
         console.log();
       })
@@ -120,8 +132,8 @@ function buildWebDriver(browser) {
   // host of other problems with starting Chrome). the only thing that seems to
   // allow Chrome to start without problems consistently is using ChromeHeadless
   // @see https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
-  if (browser === 'chrome') {
-    const service = new chrome.ServiceBuilder(chromedriver).build();
+  if (browser === 'chrome' || browser === 'chromeheadless') {
+    const service = new chrome.ServiceBuilder(chromedriverPath).build();
 
     const options = new chrome.Options().addArguments([
       '--headless',
@@ -163,9 +175,23 @@ function start(options) {
   const testUrls = (
     urlArgs.length
       ? urlArgs
-      : globSync(['test/integration/full/**/*.{html,xhtml}'], {
-          ignore: '**/frames/**/*.{html,xhtml}'
-        })
+      : globSync(
+      [
+        // 'test/integration/full/no-autoplay-audio/**/*.{html,xhtml}'
+        'test/integration/full/**/*.{html,xhtml}'
+        // 'test/integration/full/contrast/**/*.{html,xhtml}'
+        // 'test/integration/full/patch/**/*.{html,xhtml}'
+        // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+        // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
+        // 'test/integration/full/**/*__.xhtml',
+        // 'test/integration/full/**/*.html',
+      ],
+      {
+        ignore: [
+          '**/frames/**/*.{html,xhtml}',
+          '**/no-autoplay-audio/*.{html,xhtml}' // Chrome 145+ (currently 147)
+        ] // '**/frames/**/*.html'
+      })
   ).map(url => {
     return `http://localhost:9876/${url.replace(/^\//, '')}`;
   });

@@ -1,7 +1,19 @@
 const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
+
+const chromedriver = require('chromedriver');
+// rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose
+require('dotenv').config({ path: '~/.browser-driver-manager/.env' });
 const chromedriverPath =
-  process.env.CHROMEDRIVER_BIN ?? require('chromedriver').path;
+  process.env.CHROMEDRIVER_BIN ||
+  process.env.CHROMEDRIVER_TEST_PATH ||
+  chromedriver.path ||
+  process.env.CHROMEWEBDRIVER ||
+  process.env.CHROME_BIN ||
+  process.env.CHROME_TEST_PATH;
+console.log(
+  `CHROME DRIVER (get) === ${chromedriverPath} (${process.env.CHROMEDRIVER_BIN} / ${process.env.CHROMEDRIVER_TEST_PATH} / ${chromedriver.path} / ${process.env.CHROME_BIN}}) [${process.env.CHROME_TEST_VERSION}] ** ${process.env.CHROME_TEST_PATH} !! ${process.env.CHROMEWEBDRIVER}`
+);
 
 const getWebdriver = () => {
   const service = new chrome.ServiceBuilder(chromedriverPath);

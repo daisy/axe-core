@@ -21,7 +21,7 @@ axe.run(context, {}, (error: Error, results: axe.AxeResults) => {
     errors.map(error =>
       error
         ? `${error.message} ${error.ruleId} ${error.method}\n\n${error.stack}`
-        : ''
+        : 'UNDEFINED err'
     )
   );
   console.log(results.inapplicable.length);
@@ -58,7 +58,7 @@ export async function runAsync() {
   await axe.run([[['main']]]);
   await axe.run([[['#app', 'main']]]); // Selecting in the outer frame
 
-  await axe.run(document.querySelector('main')!);
+  await axe.run(document.querySelector('main')!); //  as unknown as Node | undefined
   await axe.run(document.querySelectorAll('main'));
   // axe.run with frameContext context
   await axe.run({ fromShadowDom: ['#app', '#main', '#inner'] });
