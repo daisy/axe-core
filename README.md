@@ -8,8 +8,8 @@ TODO: TAZE  --maturity-period 3 and PNPM minimumReleaseAge
 - `npm outdated`
 - `((pnpm exec taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && pnpm exec taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
 - `((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
-- `npm run build`
-- `npx husky`
+- `pnpm run build`
+- `pnpm exec husky`
 - `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
 - `cat ~/.browser-driver-manager/.env`
 - `source ~/.browser-driver-manager/.env`
