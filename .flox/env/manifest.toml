@@ -32,8 +32,8 @@ schema-version = "1.11.0"
 # printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh" }}\x9c'
 
 [install]
-nodejs_24.pkg-path = "nodejs_24"
-nodejs_24.outputs = "all"
+nodejs_26.pkg-path = "nodejs_26"
+nodejs_26.outputs = "all"
 
 [vars]
 FLOX_DISABLE_METRICS="true"
