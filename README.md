@@ -4,26 +4,22 @@ TODO: TAZE  --maturity-period 3 and PNPM minimumReleaseAge
 
 - `rm -rf $(pnpm store path)` (careful before running this, make sure `pnpm store path` returns the expected path!! ... i.e. not `~/` ;) )
 - `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install --ignore-scripts`
+- `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare`
+- `cd node_modules/chromedriver && pnpm run install && cd ../..`
 - `npm audit`
 - `npm outdated`
 - `((pnpm exec taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && pnpm exec taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
 - `((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
 - `pnpm run build`
 - `pnpm exec husky`
-- `rm -rf ~/.browser-driver-manager && npx browser-driver-manager install chromedriver --verbose`
-- `cat ~/.browser-driver-manager/.env`
-- `source ~/.browser-driver-manager/.env`
-- `env | grep -i CHROME`
-- `echo $CHROME_TEST_PATH`
-- `export CHROME_BIN="${CHROME_TEST_PATH}"`
-- `echo $CHROMEDRIVER_TEST_PATH`
-- `export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}"`
+- `pnpx @puppeteer/browsers list`
+- `env NODE_DEBUG="puppeteer:browsers:*" pnpx @puppeteer/browsers install chrome@stable` ===> ./chrome/mac_arm-151.0.7922.77/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
-- `npm run test:chromeheadless`
+- `WTR_BROWSER=chrome pnpm run test`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
-- `npm run test:chrome`
+- `WTR_BROWSER=chrome pnpm run test:integration:chrome`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 
@@ -43,6 +39,20 @@ https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a
 
 // _ `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare && cd ../..`
 // _ `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; pnpm run prepare ; cd ../..`
+
+NOT NEEDED:
+
+- `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chromedriver --verbose` ===> "Error: All providers failed for chromedriver 151.0.7922.77: DefaultProvider: The browser folder (~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77) exists but the executable (~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77/chromedriver-mac-arm64/chromedriver) is missing"
+- `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chrome --verbose` ==> stuck at `await installBrowser` in `node_modules/browser-driver-manager/src/browser-driver-manager.js` :(
+- `ls -als ~/.browser-driver-manager/` ===> 151.0.7922.77
+- `ls -alsR ~/.browser-driver-manager/`
+- MISSING??: `cat ~/.browser-driver-manager/.env`
+- MISSING??: `source ~/.browser-driver-manager/.env`
+- `env | grep -i CHROME`
+- `echo $CHROME_TEST_PATH`
+- `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- `echo $CHROMEDRIVER_TEST_PATH`
+- `export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}"`
 
 `~/.browser-driver-manager/.env`
 ==>

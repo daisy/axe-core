@@ -12,6 +12,9 @@ patchedDependencies:
   colorjs.io@0.4.3: patches/colorjs.io@0.4.3.patch
 ignoreScripts: true
 blockExoticSubdeps: true
+minimumReleaseAgeExclude:
+  - chromedriver@151.0.4
+
 #minimumReleaseAge: 10080
 #minimumReleaseAgeExclude:
 #  - x
