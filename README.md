@@ -1,6 +1,6 @@
 DEV: `HUSKY=0 pnpm install --ignore-scripts` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
 
-TODO: TAZE  --maturity-period 3 and PNPM minimumReleaseAge
+TODO: TAZE --maturity-period 3 and PNPM minimumReleaseAge
 
 - `rm -rf $(pnpm store path)` (careful before running this, make sure `pnpm store path` returns the expected path!! ... i.e. not `~/` ;) )
 - `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install --ignore-scripts`
@@ -42,7 +42,7 @@ https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a
 
 NOT NEEDED:
 
-- `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chromedriver --verbose` ===> "Error: All providers failed for chromedriver 151.0.7922.77: DefaultProvider: The browser folder (~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77) exists but the executable (~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77/chromedriver-mac-arm64/chromedriver) is missing"
+- `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chromedriver --verbose` ===> "Error: All providers failed for chromedriver 151.0.7922.77: DefaultProvider: The browser folder (~~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77) exists but the executable (~~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77/chromedriver-mac-arm64/chromedriver) is missing"
 - `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chrome --verbose` ==> stuck at `await installBrowser` in `node_modules/browser-driver-manager/src/browser-driver-manager.js` :(
 - `ls -als ~/.browser-driver-manager/` ===> 151.0.7922.77
 - `ls -alsR ~/.browser-driver-manager/`

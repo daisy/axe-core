@@ -6,11 +6,11 @@ const chromedriver = require('chromedriver');
 // rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chromedriver --verbose
 // require('dotenv').config({ path: '~/.browser-driver-manager/.env' });
 const chromedriverPath = process.env.CHROMEDRIVER_BIN || chromedriver.path;
-  // process.env.CHROMEDRIVER_TEST_PATH ||
-  // chromedriver.path ||
-  // process.env.CHROMEWEBDRIVER ||
-  // process.env.CHROME_BIN ||
-  // process.env.CHROME_TEST_PATH
+// process.env.CHROMEDRIVER_TEST_PATH ||
+// chromedriver.path ||
+// process.env.CHROMEWEBDRIVER ||
+// process.env.CHROME_BIN ||
+// process.env.CHROME_TEST_PATH
 console.log(
   `CHROME DRIVER (get) === ${chromedriverPath} (${process.env.CHROMEDRIVER_BIN} --- ${chromedriver.path} --- ${process.env.CHROMEDRIVER_TEST_PATH} --- ${process.env.CHROME_BIN} --- ${process.env.CHROME_TEST_VERSION} --- ${process.env.CHROME_TEST_PATH} --- ${process.env.CHROMEWEBDRIVER}`
 );
@@ -175,22 +175,23 @@ function start(options) {
     urlArgs.length
       ? urlArgs
       : globSync(
-      [
-        // 'test/integration/full/no-autoplay-audio/**/*.{html,xhtml}'
-        'test/integration/full/**/*.{html,xhtml}'
-        // 'test/integration/full/contrast/**/*.{html,xhtml}'
-        // 'test/integration/full/patch/**/*.{html,xhtml}'
-        // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
-        // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
-        // 'test/integration/full/**/*__.xhtml',
-        // 'test/integration/full/**/*.html',
-      ],
-      {
-        ignore: [
-          '**/frames/**/*.{html,xhtml}',
-          '**/no-autoplay-audio/*.{html,xhtml}' // Chrome 145+ (currently 147)
-        ] // '**/frames/**/*.html'
-      })
+          [
+            // 'test/integration/full/no-autoplay-audio/**/*.{html,xhtml}'
+            'test/integration/full/**/*.{html,xhtml}'
+            // 'test/integration/full/contrast/**/*.{html,xhtml}'
+            // 'test/integration/full/patch/**/*.{html,xhtml}'
+            // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
+            // 'test/integration/rules/color-contrast-enhanced/**/*.{html,xhtml}'
+            // 'test/integration/full/**/*__.xhtml',
+            // 'test/integration/full/**/*.html',
+          ],
+          {
+            ignore: [
+              '**/frames/**/*.{html,xhtml}',
+              '**/no-autoplay-audio/*.{html,xhtml}' // Chrome 145+ (currently 147)
+            ] // '**/frames/**/*.html'
+          }
+        )
   ).map(url => {
     return `http://localhost:9876/${url.replace(/^\//, '')}`;
   });
