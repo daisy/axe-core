@@ -73,7 +73,7 @@ runs:
     #     firefox-version: ${{ inputs.nightly == 'true' && 'latest-nightly' || 'latest' }}
     # - name: Install Project Dependencies
     #   shell: bash
-    #   run: pnpm ci
+    #   run: pnpm ci --frozen-lockfile--ignore-scripts
     - name: CHROME Version
       run: ${{ steps.setup-chrome.outputs.chrome-path }} --version
       shell: bash

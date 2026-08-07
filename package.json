@@ -67,7 +67,7 @@
   ],
   "commit-and-tag-version": {
     "scripts": {
-      "postbump": "pnpm ci && pnpm run sri-update && git add doc/rule-descriptions.md"
+      "postbump": "pnpm ci --frozen-lockfile --ignore-scripts && pnpm run sri-update && git add doc/rule-descriptions.md"
     },
     "skip": {
       "tag": true
