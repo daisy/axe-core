@@ -23,6 +23,9 @@ TODO: TAZE --maturity-period 3 and PNPM minimumReleaseAge
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 
+BEFORE git commit (automatic if HUSKY=1):
+`node build/run-build.mjs configure ; pnpm exec lint-staged`
+
 `--ignore-scripts` must be used, see:
 aria-practices@0.0.0 prepare
 fsevents@2.3.2 install
