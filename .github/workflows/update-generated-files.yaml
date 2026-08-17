@@ -9,4 +9,4 @@ jobs:
     if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
-    - run: echo OK
+      - run: echo OK

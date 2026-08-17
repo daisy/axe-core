@@ -72,14 +72,14 @@ describe('dom.getVisibleChildTextRects', () => {
 
   // console.log(JSON.stringify(navigator.userAgent, null, 4), JSON.stringify(Object.keys(window.mocha), null, 4), JSON.stringify(window.mocha.context, null, 4), JSON.stringify(window.mocha.options, null, 4), JSON.stringify(window.chai, null, 4));
   !navigator.userAgent.includes('Firefox') &&
-  it('changes rect size based on overflow of all ancestors', () => {
-    fixtureSetup(html`
-      <div style="overflow: hidden; height: 10px;">
-        <div style="overflow: hidden; width: 10px;">
-          <span id="target">Hello</span>
+    it('changes rect size based on overflow of all ancestors', () => {
+      fixtureSetup(html`
+        <div style="overflow: hidden; height: 10px;">
+          <div style="overflow: hidden; width: 10px;">
+            <span id="target">Hello</span>
+          </div>
         </div>
-      </div>
-    `);
+      `);
       const node = fixture.querySelector('#target');
       const actual = getVisibleChildTextRects(node);
       const rect = getClientRects(node)[0];
@@ -89,12 +89,12 @@ describe('dom.getVisibleChildTextRects', () => {
     });
 
   !navigator.userAgent.includes('Firefox') &&
-  it('changes only the rect size of text rects that go outside ancestor overflow', () => {
-    fixtureSetup(html`
-      <div style="overflow: hidden; height: 25px">
-        <span id="target">Hello<br />World</span>
-      </div>
-    `);
+    it('changes only the rect size of text rects that go outside ancestor overflow', () => {
+      fixtureSetup(html`
+        <div style="overflow: hidden; height: 25px">
+          <span id="target">Hello<br />World</span>
+        </div>
+      `);
       const node = fixture.querySelector('#target');
       const actual = getVisibleChildTextRects(node);
       const rects = getClientRects(node);

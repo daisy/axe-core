@@ -17,14 +17,15 @@ DEV: `HUSKY=0 pnpm install --ignore-scripts` (otherwise `"prepare": "husky"` in 
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 - `WTR_BROWSER=chrome pnpm run test`
+- REBUILD + CHERRY-PICK TEST: `pnpm run build && pnpm run build:integration-tests && WTR_BROWSER=chrome pnpm run test:unit 'tmp/integration-tests/landmark-unique/**/*.test.js'`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 - `WTR_BROWSER=chrome pnpm run test:integration:chrome`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 
-BEFORE git commit (automatic if HUSKY=1):
-`node build/run-build.mjs configure ; pnpm exec lint-staged`
+BEFORE git commit (automatic if `HUSKY=1`, via `lint-staged`):
+`node build/run-build.mjs configure ; pnpm run lint:mjs ; pnpm run lint:js; pnpm run fmt:md; pnpm run fmt:json; pnpm run fmt:ts; pnpm run fmt:js; pnpm run fmt:mjs; pnpm run fmt:html; pnpm run fmt:xhtml; pnpm run fmt:yml`
 
 `--ignore-scripts` must be used, see:
 aria-practices@0.0.0 prepare

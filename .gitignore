@@ -39,3 +39,5 @@ doc/rule-descriptions.*.md
 .flox/log
 .flox/NPM_PREFIX
 .flox/NPM_CACHE
+
+chrome/

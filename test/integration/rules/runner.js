@@ -6,6 +6,7 @@
   const testName = testObj.description || `${ruleId} test`;
 
   // axe.configure({}); // DAISY-AXE BREAKPOINT AXE CONFIGURE
+  const DEBUG_TRACE = false;
 
   function flattenResult(results) {
     return {
@@ -60,11 +61,12 @@
           test[collection].forEach(selector => {
             it(`should find ${JSON.stringify(selector)}`, () => {
               if (!nodes) {
-				console.log(
-				JSON.stringify(results, null, 4),
-				' a---- ',
-				JSON.stringify(test, null, 4)
-				);
+                if (DEBUG_TRACE)
+                  console.log(
+                    JSON.stringify(results, null, 4),
+                    ' a---- ',
+                    JSON.stringify(test, null, 4)
+                  );
 
                 assert(false, `there are no ${collection}`);
                 return;
@@ -93,25 +95,27 @@
               });
 
               if (matches.length === 0) {
-                console.log(
-                  JSON.stringify(results, null, 4),
-                  ' b---- ',
-                  JSON.stringify(test, null, 4),
-                  ' b---- ',
-                  JSON.stringify(nodesBackup, null, 4)
-                );
+                if (DEBUG_TRACE)
+                  console.log(
+                    JSON.stringify(results, null, 4),
+                    ' b---- ',
+                    JSON.stringify(test, null, 4),
+                    ' b---- ',
+                    JSON.stringify(nodesBackup, null, 4)
+                  );
 
                 assert(false, 'Element not found');
               } else if (matches.length === 1) {
                 assert(true, 'Element found');
               } else {
-                console.log(
-                  JSON.stringify(results, null, 4),
-                  ' c---- ',
-                  JSON.stringify(test, null, 4),
-                  ' c---- ',
-                  JSON.stringify(nodesBackup, null, 4)
-                );
+                if (DEBUG_TRACE)
+                  console.log(
+                    JSON.stringify(results, null, 4),
+                    ' c---- ',
+                    JSON.stringify(test, null, 4),
+                    ' c---- ',
+                    JSON.stringify(nodesBackup, null, 4)
+                  );
 
                 assert(
                   false,

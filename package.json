@@ -121,6 +121,16 @@
     "codemod:modernize-tests": "node build/codemods/modernize-test-files.mjs",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
+    "fmt:md": "prettier --write **/*.md",
+    "fmt:json": "prettier --write **/*.json",
+    "fmt:ts": "prettier --write **/*.ts",
+    "fmt:js": "prettier --write **/*.js",
+    "fmt:mjs": "prettier --write **/*.mjs",
+    "fmt:html": "prettier --write **/*.html",
+    "fmt:xhtml": "prettier --write **/*.xhtml",
+    "fmt:yml": "prettier --write **/*.yml",
+    "lint:js": "eslint --fix **/*.js",
+    "lint:mjs": "eslint --fix **/*.mjs",
     "prepare": "HUSKY=1 husky",
     "prebuild": "node ./build/check-node-version.mjs",
     "pretest": "node ./build/check-node-version.mjs",
@@ -192,7 +202,7 @@
     "weakmap-polyfill": "^2.0.4"
   },
   "lint-staged": {
-    "*.{md,json,ts,html}": [
+    "*.{md,json,ts,js,mjs,html,xhtml,yml}": [
       "prettier --write"
     ],
     "*.{js,mjs}": [

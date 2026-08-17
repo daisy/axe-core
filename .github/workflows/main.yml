@@ -75,7 +75,7 @@ jobs:
       - run: npm --global install pnpm@^11
       - run: pnpm --version
       - name: (P)NPM INSTALL
-#  ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((pnpm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && pnpm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
+        #  ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((pnpm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && pnpm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
         run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm ci --frozen-lockfile --ignore-scripts
         shell: bash
       - name: BUILD
