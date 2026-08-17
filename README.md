@@ -1,19 +1,18 @@
 DEV: `HUSKY=0 pnpm install --ignore-scripts` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
 
-TODO: TAZE --maturity-period 3 and PNPM minimumReleaseAge
-
 - `rm -rf $(pnpm store path)` (careful before running this, make sure `pnpm store path` returns the expected path!! ... i.e. not `~/` ;) )
 - `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install --ignore-scripts`
 - `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare`
 - `cd node_modules/chromedriver && pnpm run install && cd ../..`
 - `npm audit`
 - `npm outdated`
-- `((pnpm exec taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && pnpm exec taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
-- `((npm exec --no --offline -- taze --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
+- PNPM: `((pnpm exec taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && pnpm exec taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
+- NPM: `((npm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
 - `pnpm run build`
 - `pnpm exec husky`
 - `pnpx @puppeteer/browsers list`
 - `env NODE_DEBUG="puppeteer:browsers:*" pnpx @puppeteer/browsers install chrome@stable` ===> ./chrome/mac_arm-151.0.7922.77/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing
+- `pnpx @puppeteer/browsers list`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 - `WTR_BROWSER=chrome pnpm run test`
