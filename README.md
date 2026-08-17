@@ -18,9 +18,10 @@ DEV: `HUSKY=0 pnpm install --ignore-scripts` (otherwise `"prepare": "husky"` in 
 - `rm -rf "~/Library/Application Support/Google"`
 - `WTR_BROWSER=chrome pnpm run test`
 - REBUILD + CHERRY-PICK TEST: `pnpm run build && pnpm run build:integration-tests && WTR_BROWSER=chrome pnpm run test:unit 'tmp/integration-tests/landmark-unique/**/*.test.js'`
+- REBUILD + CHERRY-PICK TEST: `pnpm run build && pnpm run build:integration-tests && WTR_BROWSER=chrome pnpm run test:unit 'tmp/integration-tests/pagebreak-label/**/*.test.js'`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
-- `WTR_BROWSER=chrome pnpm run test:integration:chrome`
+- `WTR_BROWSER=chrome pnpm run test:integration:chrome` (CHERRY-PICK TEST by editing `globSync()` in `test-webdriver.js`)
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 

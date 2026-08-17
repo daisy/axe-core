@@ -332,11 +332,19 @@ describe('aria.getRole', () => {
   });
 
   describe('dpub', () => {
-    it('ignores DPUB roles by default', () => {
+    it('does not ignore DPUB roles by default (absent)', () => {
       const node = document.createElement('section');
       node.setAttribute('role', 'doc-chapter');
       flatTreeSetup(node);
-      assert.isNull(aria.getRole(node));
+      // assert.isNull(aria.getRole(node));
+      assert.equal(aria.getRole(node), 'doc-chapter');
+    });
+    it('does not ignore DPUB roles by default (undefined)', () => {
+      const node = document.createElement('section');
+      node.setAttribute('role', 'doc-chapter');
+      flatTreeSetup(node);
+      // assert.isNull(aria.getRole(node));
+      assert.equal(aria.getRole(node, { dpub: undefined }), 'doc-chapter');
     });
 
     it('returns DPUB roles with `dpub: true`', () => {
@@ -353,22 +361,20 @@ describe('aria.getRole', () => {
       assert.equal(aria.getRole(node, { dpub: true }), 'doc-chapter');
     });
 
-    it('returns non-DPUB implicit roles with `dpub: false/undefined`', function () {
+    it('returns non-DPUB implicit roles with `dpub: false`', function () {
       const node = document.createElement('li');
       node.setAttribute('role', 'doc-chapter');
       const parentNode = document.createElement('div');
       parentNode.appendChild(node);
       flatTreeSetup(parentNode);
       assert.equal(aria.getRole(node, { dpub: false }), 'listitem');
-      assert.equal(aria.getRole(node, { dpub: undefined }), 'listitem');
     });
 
-    it('does not returns DPUB roles with `dpub: false/undefined`', () => {
+    it('does not returns DPUB roles with `dpub: false`', () => {
       const node = document.createElement('section');
       node.setAttribute('role', 'doc-chapter');
       flatTreeSetup(node);
       assert.isNull(aria.getRole(node, { dpub: false }));
-      assert.isNull(aria.getRole(node, { dpub: undefined }));
     });
   });
 
@@ -399,14 +405,14 @@ describe('aria.getRole', () => {
         '<ul><li id="target" role="doc-chapter section"></li></ul>';
       flatTreeSetup(fixture);
       const node = fixture.querySelector('#target');
-      assert.equal(aria.getRole(node, { fallback: true }), 'listitem');
+      assert.equal(aria.getRole(node, { dpub: false, fallback: true }), 'listitem');
     });
 
     it('respect the `noImplicit` option', () => {
       const node = document.createElement('li');
       node.setAttribute('role', 'doc-chapter section');
       flatTreeSetup(node);
-      assert.isNull(aria.getRole(node, { fallback: true, noImplicit: true }));
+      assert.isNull(aria.getRole(node, { dpub: false, fallback: true, noImplicit: true }));
     });
 
     it('respect the `abstracts` option', () => {
@@ -414,7 +420,7 @@ describe('aria.getRole', () => {
       node.setAttribute('role', 'doc-chapter section');
       flatTreeSetup(node);
       assert.equal(
-        aria.getRole(node, { fallback: true, abstracts: true }),
+        aria.getRole(node, { dpub: false, fallback: true, abstracts: true }),
         'section'
       );
     });
@@ -429,7 +435,7 @@ describe('aria.getRole', () => {
       );
     });
 
-    it('respect the `dpub: false/undefined` option, whilst skipping the implicit roles due to non-abstract explicit role', function () {
+    it('respect the `dpub: false` option, whilst skipping the implicit roles due to non-abstract explicit role', function () {
       var node = document.createElement('li');
       node.setAttribute('role', 'doc-chapter region');
       var parentNode = document.createElement('div');
@@ -439,13 +445,9 @@ describe('aria.getRole', () => {
         aria.getRole(node, { fallback: true, dpub: false }),
         'region'
       );
-      assert.equal(
-        aria.getRole(node, { fallback: true, dpub: undefined }),
-        'region'
-      );
     });
 
-    it('respect the `dpub: false/undefined` option, whilst ignoring the implicit roles and abstract explicit role', function () {
+    it('respect the `dpub: false` option, whilst ignoring the implicit roles and abstract explicit role', function () {
       var node = document.createElement('li');
       node.setAttribute('role', 'doc-chapter section');
       var parentNode = document.createElement('div');
@@ -454,25 +456,14 @@ describe('aria.getRole', () => {
       assert.isNull(
         aria.getRole(node, { noImplicit: true, fallback: true, dpub: false })
       );
-      assert.isNull(
-        aria.getRole(node, {
-          noImplicit: true,
-          fallback: true,
-          dpub: undefined
-        })
-      );
     });
 
-    it('respect the `dpub: false/undefined` option', function () {
+    it('respect the `dpub: false` option', function () {
       var node = document.createElement('div');
       node.setAttribute('role', 'doc-chapter region');
       flatTreeSetup(node);
       assert.equal(
         aria.getRole(node, { fallback: true, dpub: false }),
-        'region'
-      );
-      assert.equal(
-        aria.getRole(node, { fallback: true, dpub: undefined }),
         'region'
       );
     });

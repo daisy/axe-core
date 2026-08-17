@@ -177,6 +177,7 @@ function start(options) {
       : globSync(
           [
             'test/integration/full/**/*.{html,xhtml}'
+            // 'test/integration/full/pagebreak-label/**/*.{html,xhtml}'
             // 'test/integration/full/landmark-one-main/**/*.{html,xhtml}'
             // 'test/integration/full/no-autoplay-audio/**/*.{html,xhtml}'
             // 'test/integration/full/contrast/**/*.{html,xhtml}'

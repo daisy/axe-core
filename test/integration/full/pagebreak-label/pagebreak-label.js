@@ -32,15 +32,10 @@ describe('pagebreak-label test fail', function () {
     });
 
     it('should find #p3 #p4 #p5', function () {
-      // note pagebreak-label.json rule check this is PASS instead of FAIL (parser diff)
-      // npm run test:integration:chrome (THIS)
-      // vs.
-      // npm run test:unit -- --browsers Chrome testDirs=integration
-      // or
-      // npm run test:unit -- --browsers ChromeHeadless testDirs=integration
+      // note pagebreak-label.json rule check this is PASS instead of FAIL
+      // (HTML parser diff with empty tags vs. self-closing tags)
       assert.deepEqual(results.violations[0].nodes[0].target, ['#p3']);
       assert.deepEqual(results.violations[0].nodes[1].target, ['#p4']);
-
       assert.deepEqual(results.violations[0].nodes[2].target, ['#p5']);
       assert.deepEqual(results.violations[0].nodes[3].target, ['#p5x']);
     });

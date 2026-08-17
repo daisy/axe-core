@@ -61,12 +61,13 @@
           test[collection].forEach(selector => {
             it(`should find ${JSON.stringify(selector)}`, () => {
               if (!nodes) {
-                if (DEBUG_TRACE)
+                if (DEBUG_TRACE) {
                   console.log(
                     JSON.stringify(results, null, 4),
                     ' a---- ',
                     JSON.stringify(test, null, 4)
                   );
+                }
 
                 assert(false, `there are no ${collection}`);
                 return;
@@ -95,7 +96,7 @@
               });
 
               if (matches.length === 0) {
-                if (DEBUG_TRACE)
+                if (DEBUG_TRACE) {
                   console.log(
                     JSON.stringify(results, null, 4),
                     ' b---- ',
@@ -103,12 +104,13 @@
                     ' b---- ',
                     JSON.stringify(nodesBackup, null, 4)
                   );
+                }
 
                 assert(false, 'Element not found');
               } else if (matches.length === 1) {
                 assert(true, 'Element found');
               } else {
-                if (DEBUG_TRACE)
+                if (DEBUG_TRACE) {
                   console.log(
                     JSON.stringify(results, null, 4),
                     ' c---- ',
@@ -116,6 +118,7 @@
                     ' c---- ',
                     JSON.stringify(nodesBackup, null, 4)
                   );
+                }
 
                 assert(
                   false,
