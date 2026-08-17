@@ -11,8 +11,9 @@ DEV: `HUSKY=0 pnpm install --ignore-scripts` (otherwise `"prepare": "husky"` in 
 - `pnpm run build`
 - `pnpm exec husky`
 - `pnpx @puppeteer/browsers list`
-- `env NODE_DEBUG="puppeteer:browsers:*" pnpx @puppeteer/browsers install chrome@stable` ===> ./chrome/mac_arm-151.0.7922.77/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing
+- `env NODE_DEBUG="puppeteer:browsers:*" pnpx @puppeteer/browsers install chrome@stable` ===> ./chrome/mac_arm-152.0.7977.42/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing
 - `pnpx @puppeteer/browsers list`
+- `export CHROME_BIN="/Users/admin/Desktop/ACE/axe-core/chrome/mac_arm-152.0.7977.42/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"`
 - `killall -9 "Google Chrome"`
 - `rm -rf "~/Library/Application Support/Google"`
 - `WTR_BROWSER=chrome pnpm run test`
