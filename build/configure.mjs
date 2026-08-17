@@ -10,7 +10,7 @@ import { compareRuleIds } from './rule-id-sort.mjs';
 
 const doTRegex = /\{\{.+?\}\}/g;
 
-var descriptionTableHeader =
+const descriptionTableHeader =
   '| Rule ID | Description | Impact | Tags | Issue Type | [ACT Rules](https://www.w3.org/WAI/standards-guidelines/act/rules/) |\n| :------- | :------- | :------- | :------- | :------- | :------- |\n';
 
 // prevent striping newline characters from strings (e.g. failure
