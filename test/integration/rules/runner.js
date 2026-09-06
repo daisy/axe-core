@@ -5,6 +5,9 @@
   const ruleId = testObj.rule;
   const testName = testObj.description || `${ruleId} test`;
 
+  // axe.configure({}); // DAISY-AXE BREAKPOINT AXE CONFIGURE
+  const DEBUG_TRACE = false;
+
   function flattenResult(results) {
     return {
       passes: results.passes[0],
@@ -58,9 +61,26 @@
           test[collection].forEach(selector => {
             it(`should find ${JSON.stringify(selector)}`, () => {
               if (!nodes) {
+                if (DEBUG_TRACE) {
+                  console.log(
+                    JSON.stringify(results, null, 4),
+                    ' a---- ',
+                    JSON.stringify(test, null, 4)
+                  );
+                }
+
                 assert(false, `there are no ${collection}`);
                 return;
               }
+
+              const nodesBackup = [].concat(nodes);
+              // console.log(
+              //   collection,
+              //   selector,
+              //   '====',
+              //   JSON.stringify(nodes, null, 4),
+              //   JSON.stringify(nodesBackup, null, 4),
+              // );
 
               const matches = nodes.filter(node => {
                 for (let i = 0; i < selector.length; i++) {
@@ -76,10 +96,30 @@
               });
 
               if (matches.length === 0) {
+                if (DEBUG_TRACE) {
+                  console.log(
+                    JSON.stringify(results, null, 4),
+                    ' b---- ',
+                    JSON.stringify(test, null, 4),
+                    ' b---- ',
+                    JSON.stringify(nodesBackup, null, 4)
+                  );
+                }
+
                 assert(false, 'Element not found');
               } else if (matches.length === 1) {
                 assert(true, 'Element found');
               } else {
+                if (DEBUG_TRACE) {
+                  console.log(
+                    JSON.stringify(results, null, 4),
+                    ' c---- ',
+                    JSON.stringify(test, null, 4),
+                    ' c---- ',
+                    JSON.stringify(nodesBackup, null, 4)
+                  );
+                }
+
                 assert(
                   false,
                   `Found ${matches.length} elements which match the target`
@@ -90,6 +130,15 @@
 
           it('should not return other results', () => {
             if (typeof nodes !== 'undefined') {
+              // console.log(
+              //   JSON.stringify(results, null, 4),
+              //   ' d---- ',
+              //   JSON.stringify(test, null, 4),
+              //   ' +++++++++++ ',
+              //   JSON.stringify(nodes, null, 4),
+              //   ' d---- ',
+              //   JSON.stringify(nodesBackup, null, 4)
+              // );
               const targets = nodes.map(node => {
                 return node.target;
               });

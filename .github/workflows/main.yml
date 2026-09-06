@@ -1,0 +1,117 @@
+name: Build and Test (MAIN)
+
+on:
+  push:
+    branches: [v4.13.0_DAISY]
+    tags-ignore:
+      - '*'
+# pull_request:
+#   branches: [v4.13.0_DAISY]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions:
+  actions: none
+  artifact-metadata: none
+  attestations: none
+  checks: none
+  contents: none # <==========
+  deployments: none
+  discussions: none
+  id-token: none
+  issues: none
+  models: none
+  packages: none
+  pages: none
+  pull-requests: none
+  repository-projects: none
+  security-events: none
+  statuses: none
+
+jobs:
+  job_build_and_test:
+    permissions:
+      actions: none
+      artifact-metadata: none
+      attestations: none
+      checks: none
+      contents: read # <==========
+      deployments: none
+      discussions: none
+      id-token: write
+      issues: none
+      models: none
+      packages: none
+      pages: none
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+    if: >-
+      !contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip cd')
+      && github.repository_owner == 'daisy' && github.repository == 'daisy/axe-core'
+      && github.event_name == 'push' && github.ref_name == 'v4.13.0_DAISY'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      DISPLAY: :99
+    steps:
+# https://github.com/actions/checkout/commits/v7.0.1
+# https://github.com/actions/checkout/commits/3d3c42e5aac5ba805825da76410c181273ba90b1
+# https://github.com/actions/checkout/compare/v7.0.1...3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+# https://github.com/actions/setup-node/commits/v7.0.0
+# https://github.com/actions/setup-node/commits/820762786026740c76f36085b0efc47a31fe5020
+# https://github.com/actions/setup-node/compare/v7.0.0...820762786026740c76f36085b0efc47a31fe5020
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+# https://github.com/actions/setup-node#caching-global-packages-data
+# https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-data
+# https://github.com/actions/cache/blob/main/examples.md#node---npm
+# https://github.com/actions/setup-node/issues/1553#issuecomment-4750595425
+        with:
+          node-version: '26'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+          cache: ''
+#        cache: 'npm'
+#        node-version-file: package.json
+#        package-manager-cache: true
+#        cache-dependency-path: 'package-lock.json'
+        #check-latest: true
+      - run: node --version ; npm --version
+      - run: npm --global install npm@^12
+      - run: npm --version
+      - run: npm --global --ignore-scripts --foreground-scripts install sfw
+      - run: sfw --version
+      - run: npm --global install pnpm@^11
+      - run: pnpm --version
+      - name: (P)NPM INSTALL
+        #  ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((pnpm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && pnpm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile
+        shell: bash
+      - name: BUILD
+        run: pnpm run build
+        shell: bash
+      - &install-deps-with-xvfb
+        name: Install Deps
+        uses: ./.github/actions/install-deps
+        id: install-deps
+        with:
+          start-xvfb: ${{ env.DISPLAY }}
+      - name: CHROME TESTS
+        env:
+          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+        run: env | grep -i CHROME ; WTR_BROWSER=chrome pnpm run test:integration:chrome ; WTR_BROWSER=chrome pnpm run test
+      # - name: HUSKY
+      #   run: (npx husky || echo OK)
+      #   shell: bash
+      # - name: CHROME TESTS
+      #   run: rm -rf ~/.browser-driver-manager ; npx browser-driver-manager install chromedriver --verbose ; cat ~/.browser-driver-manager/.env ; source ~/.browser-driver-manager/.env ; env | grep -i CHROME ; echo $CHROME_TEST_PATH ; export CHROME_BIN="${CHROME_TEST_PATH}" ; echo $CHROMEDRIVER_TEST_PATH ; export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}" ; npm run test:chromeheadless
+      #   shell: bash

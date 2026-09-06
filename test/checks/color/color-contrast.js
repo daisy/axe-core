@@ -214,6 +214,12 @@ describe('color-contrast', () => {
     assert.deepEqual(checkContext._relatedNodes, []);
   });
 
+  //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/130.0.0.0 Safari/537.36"
+  //"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+  // console.log(JSON.stringify(navigator.userAgent, null, 4), JSON.stringify(Object.keys(window.mocha), null, 4), JSON.stringify(window.mocha.context, null, 4), JSON.stringify(window.mocha.options, null, 4), JSON.stringify(window.chai, null, 4));
+  // navigator.userAgent.includes('HeadlessChrome') &&
+  // =>
+  // <p style="color: black; background-color: white;">
   it.skip('should return true for inline elements with sufficient contrast spanning multiple lines', () => {
     const params = checkSetup(
       '<p>Text oh heyyyy <a href="#" id="target">and here\'s <br>a link</a></p>'
@@ -482,71 +488,71 @@ describe('color-contrast', () => {
       <pre
         style="overflow-x: auto; background-color: #333"
       ><span id="target" style="color: #000">
-      
-x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x 
-      
+
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 x
-      
+
 </span></pre>
     `);
     assert.doesNotThrow(() => {
@@ -1319,7 +1325,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #666; color:#aaa; 
+          style="background-color: #666; color:#aaa;
         text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;"
         >
           Hello world
@@ -1332,7 +1338,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #fff; color:#0f833e; 
+          style="background-color: #fff; color:#0f833e;
         text-shadow: 0 0 0 #000"
         >
           Hello world
@@ -1351,7 +1357,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #aaa; color:#666; 
+          style="background-color: #aaa; color:#666;
         text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;"
         >
           Hello world
@@ -1366,7 +1372,7 @@ x
         html`
           <div
             id="target"
-            style="background-color: #aaa; color:#666; 
+            style="background-color: #aaa; color:#666;
         text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;"
           >
             Hello world
@@ -1382,7 +1388,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #aaa; color:#666; 
+          style="background-color: #aaa; color:#666;
         text-shadow: 1px 1px 0.01em #000"
         >
           Hello world
@@ -1396,7 +1402,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #aaa; color:#666; 
+          style="background-color: #aaa; color:#666;
         text-shadow: 0 0 0.01em #000"
         >
           Hello world
@@ -1410,7 +1416,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #aaa; color:#666; 
+          style="background-color: #aaa; color:#666;
         text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;"
         >
           Hello world
@@ -1423,7 +1429,7 @@ x
       const params = checkSetup(html`
         <div
           id="target"
-          style="background-color: #aaa; color:#666; 
+          style="background-color: #aaa; color:#666;
         text-shadow: 0 0 0.09em #000, 0 0 0.09em #000, 0 0 0.09em #000;"
         >
           Hello world
@@ -1438,7 +1444,7 @@ x
           id="target"
           style="
     background-color: #aaa;
-    color:#666; 
+    color:#666;
     text-shadow: 1px 1px #000;
   "
         >

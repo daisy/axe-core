@@ -1,49 +1,12 @@
 name: Create release candidate
 
-on: [workflow_dispatch]
-
+on:
+  push:
+    branches:
+      - xxxxxxxxxxxxxxxxxxxxxxxxx
 jobs:
-  create_release:
-    name: Create release
+  skip:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      # Must precede setup-node so its `cache: pnpm` can resolve the store path.
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: 'pnpm'
-      - name: Run release script and open PR
-        run: |
-          git config user.name "API Team CI User"
-          git config user.email "aciattestteamci@deque.com"
-
-          Branch="release-$(date +%Y-%m-%d)"
-          echo "Branch: $Branch"
-          git checkout -b "$Branch"
-
-          pnpm ci
-          pnpm run release
-
-          git push origin "$Branch" --force
-
-          Version=$(jq -r .version ./package.json)
-          echo "Version: $Version"
-
-          # Get the additions to the changelog as the commit body and generate the PR url
-          ReleaseNotes=$(
-            git show \
-              --no-color \
-              --no-prefix \
-              --output-indicator-new=! CHANGELOG.md | egrep '^!' | awk -F'^[!]' '{print $2}' | sed -e 's/\n/$0A/g'
-          )
-
-          echo "$ReleaseNotes" >> /tmp/pr.txt
-          echo "" >> /tmp/pr.txt
-          echo "This PR was opened by a robot :robot: :tada:" >> /tmp/pr.txt
-          gh pr create --title "chore(release): v$Version" --body-file "/tmp/pr.txt" --base master
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+      - run: echo OK

@@ -1,3 +1,74 @@
+DEV: `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
+
+- `rm -rf $(pnpm store path)` (careful before running this, make sure `pnpm store path` returns the expected path!! ... i.e. not `~/` ;) )
+- `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install`
+- `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare`
+- `cd node_modules/chromedriver && pnpm run install && cd ../..`
+- `npm audit`
+- `npm outdated`
+- PNPM: `((pnpm exec taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && pnpm exec taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
+- NPM: `((npm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd . && npm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 10 --loglevel debug --cwd .) || echo OK)`
+- `pnpm run build`
+- `pnpm exec husky`
+- `pnpx @puppeteer/browsers list`
+- `env NODE_DEBUG="puppeteer:browsers:*" pnpx @puppeteer/browsers install chrome@stable` ===> ./chrome/mac_arm-152.0.7977.42/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing
+- `pnpx @puppeteer/browsers list`
+- `export CHROME_BIN="/Users/admin/Desktop/ACE/axe-core/chrome/mac_arm-152.0.7977.42/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
+- `WTR_BROWSER=chrome pnpm run test`
+- REBUILD + CHERRY-PICK TEST: `pnpm run build && pnpm run build:integration-tests && WTR_BROWSER=chrome pnpm run test:unit 'tmp/integration-tests/landmark-unique/**/*.test.js'`
+- REBUILD + CHERRY-PICK TEST: `pnpm run build && pnpm run build:integration-tests && WTR_BROWSER=chrome pnpm run test:unit 'tmp/integration-tests/pagebreak-label/**/*.test.js'`
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
+- `WTR_BROWSER=chrome pnpm run test:integration:chrome` (CHERRY-PICK TEST by editing `globSync()` in `test-webdriver.js`)
+- `killall -9 "Google Chrome"`
+- `rm -rf "~/Library/Application Support/Google"`
+
+BEFORE git commit (automatic if `HUSKY=1`, via `lint-staged`):
+`node build/run-build.mjs configure ; pnpm run lint:mjs ; pnpm run lint:js; pnpm run fmt:md; pnpm run fmt:json; pnpm run fmt:ts; pnpm run fmt:js; pnpm run fmt:mjs; pnpm run fmt:html; pnpm run fmt:xhtml; pnpm run fmt:yml`
+
+`--ignore-scripts` must be used, but see PNPM workspace YAML `allowBuilds`:
+aria-practices@0.0.0 prepare
+wcag-act-rules ALSO
+fsevents@2.3.2 install
+pre-commit@1.2.2 install
+spawn-sync@1.0.15 postinstall
+act-tools@1.0.0 postinstall
+act-tools@1.0.0 prebuild
+act-tools@1.0.0 build
+act-tools@1.0.0 prepare
+==> husky install!! (not skipped by `export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0;` ???)
+https://github.com/act-rules/act-tools/blob/31ea4ae3553f1d4be885edf7568e8461b04a927a/package.json#L21C17-L21C22
+
+`npm cache clean --force` and/or `rm -f .git/hooks/pre-commit` might be necessary.
+
+// _ `cd node_modules && cd aria-practices && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare && cd ../..`
+// _ `cd node_modules && cd aria-practices && export HUSKY=0; export HUSKY_SKIP_HOOKS=0; export HUSKY_SKIP_INSTALL=0; pnpm run prepare ; cd ../..`
+
+NOT NEEDED:
+
+- `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chromedriver --verbose` ===> "Error: All providers failed for chromedriver 151.0.7922.77: DefaultProvider: The browser folder (~~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77) exists but the executable (~~/.browser-driver-manager/chromedriver/mac_arm-151.0.7922.77/chromedriver-mac-arm64/chromedriver) is missing"
+- `rm -rf ~/.browser-driver-manager && pnpm exec browser-driver-manager install chrome --verbose` ==> stuck at `await installBrowser` in `node_modules/browser-driver-manager/src/browser-driver-manager.js` :(
+- `ls -als ~/.browser-driver-manager/` ===> 151.0.7922.77
+- `ls -alsR ~/.browser-driver-manager/`
+- MISSING??: `cat ~/.browser-driver-manager/.env`
+- MISSING??: `source ~/.browser-driver-manager/.env`
+- `env | grep -i CHROME`
+- `echo $CHROME_TEST_PATH`
+- `export CHROME_BIN="${CHROME_TEST_PATH}"`
+- `echo $CHROMEDRIVER_TEST_PATH`
+- `export CHROMEDRIVER_BIN="${CHROMEDRIVER_TEST_PATH}"`
+
+`~/.browser-driver-manager/.env`
+==>
+
+```
+CHROME_TEST_PATH="/Users/U/.browser-driver-manager/chrome/mac_arm-145.0.7632.46/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+CHROMEDRIVER_TEST_PATH="/Users/U/.browser-driver-manager/chromedriver/mac_arm-145.0.7632.46/chromedriver-mac-arm64/chromedriver"
+CHROME_TEST_VERSION="145.0.7632.46"
+```
+
 # axe-core
 
 [![License](https://img.shields.io/npm/l/axe-core.svg?color=c41)](LICENSE)

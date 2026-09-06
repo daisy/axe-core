@@ -77,11 +77,22 @@ describe('aria.getExplicitRole', () => {
   });
 
   describe('dpub', () => {
-    it('ignores DPUB roles by default', () => {
+    it('does not ignore DPUB roles by default (absent)', () => {
       const node = document.createElement('section');
       node.setAttribute('role', 'doc-chapter');
       const vNode = flatTreeSetup(node)[0];
-      assert.isNull(aria.getExplicitRole(vNode));
+      // assert.isNull(aria.getExplicitRole(vNode));
+      assert.equal(aria.getExplicitRole(vNode), 'doc-chapter');
+    });
+    it('does not ignore DPUB roles by default (undefined)', () => {
+      const node = document.createElement('section');
+      node.setAttribute('role', 'doc-chapter');
+      const vNode = flatTreeSetup(node)[0];
+      // assert.isNull(aria.getExplicitRole(vNode));
+      assert.equal(
+        aria.getExplicitRole(vNode, { dpub: undefined }),
+        'doc-chapter'
+      );
     });
 
     it('returns DPUB roles with `dpub: true`', () => {
@@ -126,7 +137,7 @@ describe('aria.getExplicitRole', () => {
       node.setAttribute('role', 'doc-chapter section');
       const vNode = flatTreeSetup(node)[0];
       assert.equal(
-        aria.getExplicitRole(vNode, { fallback: true, abstracts: true }),
+        aria.getExplicitRole(vNode, { dpub: false, fallback: true, abstracts: true }),
         'section'
       );
     });

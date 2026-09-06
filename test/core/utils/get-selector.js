@@ -32,7 +32,7 @@ function makeNonuniqueLongAttributes(fixture) {
   return node;
 }
 
-describe('axe.utils.getSelector', () => {
+describe('axe.utils.getSelector (core)', () => {
   const html = axe.testUtils.html;
 
   const fixture = document.getElementById('fixture');
