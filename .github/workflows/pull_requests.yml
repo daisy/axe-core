@@ -43,35 +43,6 @@ jobs:
     steps:
       - run: echo "Pull Request approval."
 
-  # job_debug1:
-  #   runs-on: ubuntu-24.04
-  #   if: >-
-  #     !cancelled()
-  #   steps:
-  #     - run: echo "NOT CANCELLED"
-
-  # job_debug2:
-  #   runs-on: ubuntu-24.04
-  #   if: >-
-  #     cancelled()
-  #   steps:
-  #     - run: echo "CANCELLED"
-
-  # job_debug3:
-  #   runs-on: ubuntu-24.04
-  #   needs: [job_approval_job]
-  #   steps:
-  #     - run: echo "${{ needs.approval_job.result }}"
-
-  # job_debug4:
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     - run: echo "${{ github.event_name }}"
-  #     - run: echo "${{ github.repository_owner }}"
-  #     - run: echo "${{ github.repository }}"
-  #     - run: echo "${{ github.base_ref }}"
-  #     - run: echo "${{ github.ref_name }}"
-
   job_build_and_test:
     needs: [job_approval_job]
     permissions:
@@ -91,8 +62,6 @@ jobs:
       repository-projects: none
       security-events: none
       statuses: none
-    #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
-    #if: "contains(github.event.head_commit.message, 'release tag')"
     if: >-
       !cancelled()
       && (needs.approval_job.result == 'success' || needs.approval_job.result == 'skipped')
