@@ -45,7 +45,7 @@ permissions:
   statuses: none
 
 jobs:
-  job-build_and_publish:
+  job_build_and_publish:
     permissions:
       actions: none
       artifact-metadata: none

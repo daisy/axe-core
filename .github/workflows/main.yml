@@ -33,7 +33,7 @@ permissions:
   statuses: none
 
 jobs:
-  job-approval_job:
+  job_approval_job:
 # github.event.pull_request.head.repo.fork
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
@@ -43,37 +43,37 @@ jobs:
     steps:
       - run: echo "Pull Request approval."
 
-  job-debug1:
+  job_debug1:
     runs-on: ubuntu-24.04
     if: >-
       !cancelled()
     steps:
       - run: echo "NOT CANCELLED"
 
-  job-debug2:
+  job_debug2:
     runs-on: ubuntu-24.04
     if: >-
       cancelled()
     steps:
       - run: echo "CANCELLED"
 
-  job-debug3:
+  job_debug3:
     runs-on: ubuntu-24.04
-    needs: [job-approval_job]
+    needs: [job_approval_job]
     steps:
-      - run: echo "{{ needs.approval_job.result }}"
+      - run: echo "${{ needs.approval_job.result }}"
 
-  job-debug4:
+  job_debug4:
     runs-on: ubuntu-24.04
     steps:
-      - run: echo "{{ github.event_name }}"
-      - run: echo "{{ github.repository_owner }}"
-      - run: echo "{{ github.repository }}"
-      - run: echo "{{ github.base_ref }}"
-      - run: echo "{{ github.ref_name }}"
+      - run: echo "${{ github.event_name }}"
+      - run: echo "${{ github.repository_owner }}"
+      - run: echo "${{ github.repository }}"
+      - run: echo "${{ github.base_ref }}"
+      - run: echo "${{ github.ref_name }}"
 
-  job-build_and_test:
-    needs: [job-approval_job]
+  job_build_and_test:
+    needs: [job_approval_job]
     permissions:
       actions: none
       artifact-metadata: none
