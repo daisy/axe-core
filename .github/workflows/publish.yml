@@ -66,30 +66,40 @@ jobs:
     env:
       DISPLAY: :99
     steps:
-      # https://github.com/actions/checkout/commits/v6.0.2
-      # https://github.com/actions/checkout/commits/de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      # https://github.com/actions/checkout/compare/v6.0.2...de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+# https://github.com/actions/checkout/commits/v7.0.1
+# https://github.com/actions/checkout/commits/3d3c42e5aac5ba805825da76410c181273ba90b1
+# https://github.com/actions/checkout/compare/v7.0.1...3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      # https://github.com/actions/setup-node/commits/v6.4.0
-      # https://github.com/actions/setup-node/commits/48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
-      # https://github.com/actions/setup-node/compare/v6.4.0...48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+# https://github.com/actions/setup-node/commits/v7.0.0
+# https://github.com/actions/setup-node/commits/820762786026740c76f36085b0efc47a31fe5020
+# https://github.com/actions/setup-node/compare/v7.0.0...820762786026740c76f36085b0efc47a31fe5020
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+# https://github.com/actions/setup-node#caching-global-packages-data
+# https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-data
+# https://github.com/actions/cache/blob/main/examples.md#node---npm
+# https://github.com/actions/setup-node/issues/1553#issuecomment-4750595425
         with:
           node-version: '26'
           registry-url: 'https://registry.npmjs.org'
-          # cache: npm
+          package-manager-cache: false
+          cache: ''
+#        cache: 'npm'
+#        node-version-file: package.json
+#        package-manager-cache: true
+#        cache-dependency-path: 'package-lock.json'
+        #check-latest: true
       - run: node --version ; npm --version
       - run: npm --global install npm@^12
       - run: npm --version
-      - run: npm --global install sfw
+      - run: npm --global --ignore-scripts --foreground-scripts install sfw
       - run: sfw --version
       - run: npm --global install pnpm@^11
       - run: pnpm --version
       - name: (P)NPM INSTALL
         # ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((pnpm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && pnpm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
-        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile --ignore-scripts
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile
         shell: bash
       - name: BUILD
         run: pnpm run build

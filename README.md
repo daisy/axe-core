@@ -1,7 +1,7 @@
-DEV: `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile --ignore-scripts` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
+DEV: `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
 
 - `rm -rf $(pnpm store path)` (careful before running this, make sure `pnpm store path` returns the expected path!! ... i.e. not `~/` ;) )
-- `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install --ignore-scripts`
+- `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install`
 - `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare`
 - `cd node_modules/chromedriver && pnpm run install && cd ../..`
 - `npm audit`
@@ -28,8 +28,9 @@ DEV: `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockf
 BEFORE git commit (automatic if `HUSKY=1`, via `lint-staged`):
 `node build/run-build.mjs configure ; pnpm run lint:mjs ; pnpm run lint:js; pnpm run fmt:md; pnpm run fmt:json; pnpm run fmt:ts; pnpm run fmt:js; pnpm run fmt:mjs; pnpm run fmt:html; pnpm run fmt:xhtml; pnpm run fmt:yml`
 
-`--ignore-scripts` must be used, see:
+`--ignore-scripts` must be used, but see PNPM workspace YAML `allowBuilds`:
 aria-practices@0.0.0 prepare
+wcag-act-rules ALSO
 fsevents@2.3.2 install
 pre-commit@1.2.2 install
 spawn-sync@1.0.15 postinstall
