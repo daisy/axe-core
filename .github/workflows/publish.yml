@@ -1,5 +1,6 @@
 #
 # https://docs.npmjs.com/trusted-publishers
+# https://docs.npmjs.com/staged-publishing
 #
 
 #GIT_COMMITTER_DATE="$(git show v4.13.0_DAISY --format=%aD | head -1)" git tag -a "v4.13.0-canary.1" v4.13.0_DAISY -m "release tag v4.13.0-canary.1" && git push --tags origin v4.13.0_DAISY && git --no-pager tag --list --format='%(refname)   %(taggerdate)'
@@ -125,7 +126,7 @@ jobs:
         #env:
         #  NPM_CONFIG_PROVENANCE: true
         shell: bash
-        run: npm publish --access public --tag=latest .
+        run: npm stage publish --access public --tag=latest .
 
 #TECHNICAL NOTE: IT IS POSSIBLE TO RETRIVEVE NPM_TOKEN VIA AN OPENIDCONNECT ENDPOINT (DO NOT DO THIS!)
 #OIDC_TOKEN=$(curl -sH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" | jq -r .value)
