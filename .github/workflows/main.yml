@@ -43,6 +43,43 @@ jobs:
     steps:
       - run: echo "Pull Request approval."
 
+  job-debug1:
+    if: >-
+      !cancelled()
+    steps:
+      - run: echo "NOT CANCELLED"
+
+  job-debug2:
+    if: >-
+      cancelled()
+    steps:
+      - run: echo "CANCELLED"
+
+  job-debug3:
+    needs: [job-approval_job]
+    steps:
+      - run: echo "{{ needs.approval_job.result }}"
+
+  job-debug4:
+    steps:
+      - run: echo "{{ github.event_name }}"
+
+  job-debug5:
+    steps:
+      - run: echo "{{ github.repository_owner }}"
+
+  job-debug6:
+    steps:
+      - run: echo "{{ github.repository }}"
+
+  job-debug7:
+    steps:
+      - run: echo "{{ github.base_ref }}"
+
+  job-debug8:
+    steps:
+      - run: echo "{{ github.ref_name }}"
+
   job-build_and_test:
     needs: [job-approval_job]
     permissions:
