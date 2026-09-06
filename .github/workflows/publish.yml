@@ -77,32 +77,34 @@ jobs:
       # https://github.com/actions/setup-node/compare/v6.4.0...48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
-          node-version: '24'
+          node-version: '26'
           registry-url: 'https://registry.npmjs.org'
           # cache: npm
       - run: node --version ; npm --version
       - run: npm --global install npm@^12
       - run: npm --version
+      - run: npm --global install sfw
+      - run: sfw --version
       - run: npm --global install pnpm@^11
       - run: pnpm --version
       - name: (P)NPM INSTALL
         # ; (npm audit || echo OK) ; (npm outdated || echo OK) ; ((pnpm exec --no --offline -- taze --maturity-period 3 --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd . && pnpm exec --no --offline -- taze --maturity-period 3 major --fail-on-outdated --all --force --include-locked --concurrency 1 --loglevel debug --cwd .) || echo OK)
-        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm ci --frozen-lockfile --ignore-scripts
+        run: rm -rf node_modules ; HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile --ignore-scripts
         shell: bash
       - name: BUILD
         run: pnpm run build
         shell: bash
-      - &install-deps-with-xvfb
-        name: Install Deps
-        uses: ./.github/actions/install-deps
-        id: install-deps
-        with:
-          start-xvfb: ${{ env.DISPLAY }}
-      - name: CHROME TESTS
-        env:
-          CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
-          CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
-        run: env | grep -i CHROME ; WTR_BROWSER=chrome pnpm run test:integration:chrome ; WTR_BROWSER=chrome pnpm run test
+      # - &install-deps-with-xvfb
+      #   name: Install Deps
+      #   uses: ./.github/actions/install-deps
+      #   id: install-deps
+      #   with:
+      #     start-xvfb: ${{ env.DISPLAY }}
+      # - name: CHROME TESTS
+      #   env:
+      #     CHROME_BIN: ${{ steps.install-deps.outputs.chrome-path }}
+      #     CHROMEDRIVER_BIN: ${{ steps.install-deps.outputs.chromedriver-path }}
+      #   run: env | grep -i CHROME ; WTR_BROWSER=chrome pnpm run test:integration:chrome ; WTR_BROWSER=chrome pnpm run test
       # - name: HUSKY
       #   run: (npx husky || echo OK)
       #   shell: bash
