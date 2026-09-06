@@ -17,8 +17,12 @@ on:
   push:
     #branches: [v4.13.0_DAISY]
     tags:
-      # https://github.com/daisy/ace/settings/rules
+      # https://github.com/daisy/axe-core/settings/rules
       - 'v*' # excludes slash /
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
@@ -41,7 +45,7 @@ permissions:
   statuses: none
 
 jobs:
-  publish:
+  job-build_and_publish:
     permissions:
       actions: none
       artifact-metadata: none
@@ -61,7 +65,7 @@ jobs:
       statuses: none
     #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
     #if: "contains(github.event.head_commit.message, 'release tag')"
-    if: "github.event_name != 'pull_request' && github.ref_name == 'v4.13.0_DAISY' && github.repository_owner == 'daisy'"
+    if: "!contains(github.event.head_commit.message, 'skip ci') && github.repository_owner == 'daisy' && github.repository == 'daisy/axe-core'"
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:

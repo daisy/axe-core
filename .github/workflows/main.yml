@@ -8,6 +8,10 @@ on:
   pull_request:
     branches: [v4.13.0_DAISY]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
 permissions:
@@ -29,7 +33,18 @@ permissions:
   statuses: none
 
 jobs:
-  build_test:
+  job-approval_job:
+# github.event.pull_request.head.repo.fork
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    environment:
+      name: "Axe Pull Requests"
+      deployment: false
+    steps:
+      - run: echo "Pull Request approval."
+
+  job-build_and_test:
+    needs: [job-approval_job]
     permissions:
       actions: none
       artifact-metadata: none
@@ -49,7 +64,12 @@ jobs:
       statuses: none
     #if: "github.event_name == 'push' && contains(github.event.head_commit.message, 'release tag')"
     #if: "contains(github.event.head_commit.message, 'release tag')"
-    if: "github.event_name == 'pull_request' || !contains(github.event.head_commit.message, 'skip ci') && github.ref_name == 'v4.13.0_DAISY' && github.repository_owner == 'daisy'"
+    if: >-
+      !cancelled()
+      && (needs.approval_job.result == 'success' || needs.approval_job.result == 'skipped')
+      && !contains(github.event.head_commit.message, 'skip ci') && !contains(github.event.head_commit.message, 'skip cd')
+      && github.repository_owner == 'daisy' && github.repository == 'daisy/axe-core'
+      && ((github.event_name == 'pull_request' && github.base_ref == 'v4.13.0_DAISY') || (github.event_name != 'pull_request' && github.ref_name == 'v4.13.0_DAISY'))
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
