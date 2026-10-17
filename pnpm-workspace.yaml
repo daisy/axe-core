@@ -1,3 +1,5 @@
+# storeDir: "/Users/admin/_/axe-core/.pnpm-store"
+#
 # Keys for the git-hosted test corpora must match the resolved tarball spec
 # exactly, so bumping either pin means updating it here too.
 allowBuilds:

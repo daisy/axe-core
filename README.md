@@ -1,8 +1,9 @@
 DEV: `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm ci --frozen-lockfile` (otherwise `"prepare": "husky"` in `w3c/aria-practices` fails https://github.com/w3c/aria-practices/blob/84b921a0c6646d2ddabaa94d918e165a1093daeb/package.json#L27 )
 
 - `rm -rf $(pnpm store path)` (careful before running this, make sure `pnpm store path` returns the expected path!! ... i.e. not `~/` ;) )
-- `rm -rf /Users/admin/Library/pnpm/` and/or `rm -rf .pnpm-store/` in case of PNPM permission problems
-- `pnpm store path && pnpm store prune && npm cache clear --force && rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install`
+- `rm -rf /Users/admin/Library/pnpm/ && rm -rf .pnpm-home/ && rm -rf .pnpm-store/` in case of PNPM permission problems
+- Also: `pnpm store path && pnpm store prune && npm cache clear --force`
+- `rm -rf node_modules/ && rm -f package-lock.json && rm -f pnpm-lock.yaml && HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 sfw pnpm install`
 - `HUSKY=0 HUSKY_SKIP_HOOKS=0 HUSKY_SKIP_INSTALL=0 pnpm run prepare`
 - `cd node_modules/chromedriver && pnpm run install && cd ../..`
 - `npm audit`
@@ -69,6 +70,13 @@ CHROME_TEST_PATH="/Users/U/.browser-driver-manager/chrome/mac_arm-145.0.7632.46/
 CHROMEDRIVER_TEST_PATH="/Users/U/.browser-driver-manager/chromedriver/mac_arm-145.0.7632.46/chromedriver-mac-arm64/chromedriver"
 CHROME_TEST_VERSION="145.0.7632.46"
 ```
+
+- Default `PNPM_HOME` is `/Users/admin/Library/pnpm`. changing `PNPM_HOME` not advised (`export PNPM_HOME="/Users/admin/_/axe-core/.pnpm-home" && env | grep -i pnpm && pnpm store path`), best to just set `storeDir: "/Users/admin/_/axe-core/.pnpm-store"` in `pnpm-workspace.yaml` ... but unfortunately, but if `/Users/admin/_/` is a VirtioFS mount ==> "ERR_SQLITE_ERROR errcode: 522 disk I/O error" (PNPM store SQLite). Unfortunately `io.cache=unsafe` and `io.bus=virtiofsd` cannot be set on MacOS mounts, SQL after open DB connection could work: `PRAGMA mmap_size = 0;` or `PRAGMA journal_mode = TRUNCATE;` (or `DELETE`), or read-only mount (e.g. `tart run --dir=GUEST_FOLDER:/PATH/TO/HOST/FOLDER:ro VM_NAME`.
+- `sudo umount "/Volumes/My Shared Files"` + `mount_virtiofs com.apple.virtio-fs.automount "/Volumes/My Shared Files"` (or `mkdir -p ~/Desktop/mnt` for example)
+- hdiutil create -size 100g -type SPARSE -fs APFS -volname "TartData" ~/Desktop/tart_shared.sparseimage
+
+- Copy project from VM host to guest: `rsync -avC --exclude '.DS_Store' --exclude '.git/' --exclude 'node_modules/' --exclude '.flox/cache/' --exclude '.flox/run/' --exclude '.flox/log/' --exclude '.flox/lib/' ~/_/axe-core/ /users/admin/Desktop/axe-core/`
+- Copy project from VM guest to host: `rsync -avC --exclude '.DS_Store' --exclude '.git/' --exclude 'node_modules/' --exclude '.flox/cache/' --exclude '.flox/run/' --exclude '.flox/log/' --exclude '.flox/lib/' /users/admin/Desktop/axe-core/ ~/_/axe-core/`
 
 # axe-core
 
