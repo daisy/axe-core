@@ -10,3 +10,15 @@ allowBuilds:
   wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b: true
 patchedDependencies:
   colorjs.io@0.7.1: patches/colorjs.io@0.7.1.patch
+ignoreScripts: true
+blockExoticSubdeps: true
+minimumReleaseAge: 4320 # 3 days
+minimumReleaseAgeExclude:
+  - chromedriver@152.0.0
+  - taze@21.1.0
+
+#minimumReleaseAge: 10080
+#minimumReleaseAgeExclude:
+#  - x
+#  - y
+#trustPolicy: no-downgrade

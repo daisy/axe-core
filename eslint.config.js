@@ -413,6 +413,7 @@ module.exports = [
   },
   {
     ignores: [
+      'chrome/',
       '**/node_modules/*',
       '**/tmp/*',
       'patches/*',

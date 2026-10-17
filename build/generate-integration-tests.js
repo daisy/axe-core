@@ -26,11 +26,14 @@ const jsonFiles = globSync('**/*.json', { cwd: rulesDir });
 let count = 0;
 for (const relPath of jsonFiles) {
   const jsonPath = path.join(rulesDir, relPath);
-  const htmlPath = jsonPath.replace(/\.json$/, '.html');
-
+  let htmlPath = jsonPath.replace(/\.json$/, '.html');
   if (!fs.existsSync(htmlPath)) {
-    // Some JSON files may not have a sibling HTML (e.g. nested frame fixtures)
-    continue;
+    htmlPath = jsonPath.replace(/\.json$/, '.xhtml');
+
+    if (!fs.existsSync(htmlPath)) {
+      // Some JSON files may not have a sibling HTML (e.g. nested frame fixtures)
+      continue;
+    }
   }
 
   let test;

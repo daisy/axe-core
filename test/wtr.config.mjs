@@ -141,8 +141,11 @@ function buildChromeLauncher({ headless = true, debugPort } = {}) {
   // Use an explicit chromedriver path when provided via env; otherwise fall
   // back to the npm `chromedriver` package so Selenium Manager doesn't try
   // to download a mismatched version at runtime.
-  const chromedriverBin =
-    process.env.CHROMEDRIVER_BIN || require('chromedriver').path;
+  const chromedriver = require('chromedriver');
+  const chromedriverBin = process.env.CHROMEDRIVER_BIN || chromedriver.path;
+  console.log(
+    `CHROME DRIVER (get) === ${chromedriverBin} (${process.env.CHROMEDRIVER_BIN} --- ${chromedriver.path} --- ${process.env.CHROMEDRIVER_TEST_PATH} --- ${process.env.CHROME_BIN} --- ${process.env.CHROME_TEST_VERSION} --- ${process.env.CHROME_TEST_PATH} --- ${process.env.CHROMEWEBDRIVER}`
+  );
   builder.setChromeService(new ChromeService(chromedriverBin));
 
   return new DirectSeleniumLauncher(builder);

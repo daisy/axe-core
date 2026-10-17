@@ -390,7 +390,7 @@ export function resolvedFullIntegrationTestHtmlPaths(projectRoot, changedPath) {
 export function isIntegrationRuleTestSource(rel) {
   return (
     rel.startsWith('test/integration/rules/') &&
-    (rel.endsWith('.json') || rel.endsWith('.html'))
+    (rel.endsWith('.json') || rel.endsWith('.html') || rel.endsWith('.xhtml'))
   );
 }
 
@@ -414,7 +414,7 @@ export function resolvedGeneratedIntegrationTestPath(projectRoot, changedPath) {
       rulesRel.replace(/\.json$/, '.test.js')
     );
   }
-  const jsonRel = rel.replace(/\.html$/, '.json');
+  const jsonRel = rel.replace(/\.x?html$/, '.json');
   const jsonAbs = path.join(projectRoot, jsonRel);
   if (fs.existsSync(jsonAbs)) {
     return resolvedGeneratedIntegrationTestPath(projectRoot, jsonAbs);

@@ -4,4 +4,4 @@
 * @dequelabs/axe-codeowners
 
 # Localisation
-locales/ja.json @mlca11y/mlca11y @dequelabs/axe-codeowners
+# locales/ja.json @mlca11y/mlca11y @dequelabs/axe-codeowners

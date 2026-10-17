@@ -34,7 +34,7 @@ Axe 3.0 supports open Shadow DOM: see our virtual DOM APIs and test utilities fo
 1. You must have Node.js version 24 or higher installed.
    If you have [nvm](https://github.com/nvm-sh/nvm) installed, simply do `nvm use` in the root of this repository.
 1. This project uses [pnpm](https://pnpm.io/). Install it using any method from the [pnpm installation guide](https://pnpm.io/installation); pnpm switches itself to the version pinned in the `packageManager` field of `package.json`.
-1. Install development dependencies. In the root folder of your axe-core repository, run `pnpm install`
+1. Install development dependencies. In the root folder of your axe-core repository, run `pnpm install --ignore-scripts`
 
 ### Building axe.js
 

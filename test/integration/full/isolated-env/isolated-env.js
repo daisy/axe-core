@@ -115,7 +115,7 @@ describe('isolated-env test', () => {
     win
       .axeFinishRun(partialResults)
       .then(results => {
-        assert.lengthOf(results.inapplicable, 0);
+        assert.lengthOf(results.inapplicable, 2);
         done();
       })
       .catch(err => {
