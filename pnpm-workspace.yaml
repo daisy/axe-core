@@ -1,6 +1,10 @@
+# storeDir: "/Users/admin/_/axe-core/.pnpm-store"
+#
 # Keys for the git-hosted test corpora must match the resolved tarball spec
 # exactly, so bumping either pin means updating it here too.
 allowBuilds:
+  '@pnpm/exe': true
+  pnpm: true
   aria-practices@https://codeload.github.com/w3c/aria-practices/tar.gz/18c1a2fca626f7aeb33270e23ae9b18833e2164d: true
   chromedriver: true # test runners fall back to `require('chromedriver').path`
   core-js: false
@@ -10,3 +14,14 @@ allowBuilds:
   wcag-act-rules@https://codeload.github.com/w3c/wcag-act-rules/tar.gz/222082a54d52874b3e73d470b9b58e83902afe3b: true
 patchedDependencies:
   colorjs.io@0.7.1: patches/colorjs.io@0.7.1.patch
+ignoreScripts: true
+blockExoticSubdeps: true
+minimumReleaseAge: 4320 # 3 days
+minimumReleaseAgeExclude:
+  - chromedriver@152.0.0
+  - taze@21.1.0
+#minimumReleaseAge: 10080
+#minimumReleaseAgeExclude:
+#  - x
+#  - y
+#trustPolicy: no-downgrade

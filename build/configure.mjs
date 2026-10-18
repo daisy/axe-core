@@ -29,10 +29,9 @@ function makeHeaderLink(title) {
 
 function buildRules(ctx, options, callback) {
   const packageJSON = ctx.readJSON('package.json');
-  const axeVersion = packageJSON.version.substring(
-    0,
-    packageJSON.version.lastIndexOf('.')
-  );
+  const _v = packageJSON.version.replace(/-\w+\.\w+$/, '');
+  const axeVersion = _v.substring(0, _v.lastIndexOf('.'));
+
   // Impact order for derived rule text (matches axe.commons.impact severity order).
   const axeImpact = Object.freeze(['minor', 'moderate', 'serious', 'critical']);
   const locale = getLocale(ctx, options);

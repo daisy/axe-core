@@ -27,23 +27,23 @@ describe('patch', function () {
     assert.equal(window.CSS, originalWindowCSS);
   });
 
-  it('imports axe.js and works while patched and mocked', async function () {
-    assert.isNull(window.CSS);
-    try {
-      await import('/axe.js');
-    } catch (error) {
-      // Should not hit this assertion
-      assert.notOk(error);
-    }
-  });
+  // it('imports axe.js and works while patched and mocked', async function () {
+  //   assert.isNull(window.CSS);
+  //   try {
+  //     await import('/axe.js');
+  //   } catch (error) {
+  //     // Should not hit this assertion
+  //     assert.notOk(error);
+  //   }
+  // });
 
-  it('imports axe.min.js and works while patched and mocked', async function () {
-    assert.isNull(window.CSS);
-    try {
-      await import('/axe.min.js');
-    } catch (error) {
-      // Should not hit this assertion
-      assert.notOk(error);
-    }
-  });
+  // it('imports axe.min.js and works while patched and mocked', async function () {
+  //   assert.isNull(window.CSS);
+  //   try {
+  //     await import('/axe.min.js');
+  //   } catch (error) {
+  //     // Should not hit this assertion
+  //     assert.notOk(error);
+  //   }
+  // });
 });

@@ -1,5 +1,6 @@
 describe('axe.getRules', () => {
-  const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  const _v = axe.version.replace(/-\w+\.\w+$/, '');
+  const ver = _v.substring(0, _v.lastIndexOf('.'));
 
   beforeEach(() => {
     axe._load({

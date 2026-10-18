@@ -3,7 +3,9 @@ describe('Audit', () => {
   const Audit = axe._thisWillBeDeletedDoNotUse.base.Audit;
   const Rule = axe._thisWillBeDeletedDoNotUse.base.Rule;
   const externalAPIs = axe.externalAPIs;
-  const ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  const _v = axe.version.replace(/-\w+\.\w+$/, '');
+  const ver = _v.substring(0, _v.lastIndexOf('.'));
+
   const { fixtureSetup, captureError } = axe.testUtils;
   let audit;
   const isNotCalled = err => {

@@ -132,7 +132,7 @@ The version you install does not need to match the project exactly: `package.jso
 Once the basic infrastructure is installed, from the repository root, do the following:
 
 ```console
-pnpm install
+pnpm install --ignore-scripts
 ```
 
 Then build the package:

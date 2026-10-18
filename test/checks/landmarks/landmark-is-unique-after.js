@@ -27,54 +27,65 @@ describe('landmark-is-unique-after', () => {
   it('should update duplicate landmarks with failed result', () => {
     const result = checks['landmark-is-unique'].after([
       createResultWithSameRelatedNodes(true, {
-        role: 'some role',
+        role: 'doc-afterword',
         accessibleText: 'some accessibleText'
+        // isLandmark: true // truthy
       }),
       createResultWithSameRelatedNodes(true, {
-        role: 'some role',
+        role: 'doc-afterword',
         accessibleText: 'some accessibleText'
+        // isLandmark: 111 // truthy
       }),
       createResultWithSameRelatedNodes(true, {
-        role: 'different role',
+        role: 'alertdialog',
         accessibleText: 'some accessibleText'
+        // isLandmark: false // falsy
       }),
       createResultWithSameRelatedNodes(true, {
-        role: 'some role',
+        role: 'doc-afterword',
         accessibleText: 'different accessibleText'
+        // isLandmark: 'true' // truthy
       })
     ]);
+    // console.log("result: ", JSON.stringify(result, null, 4));
 
     const expectedResult = [
       createResultWithProvidedRelatedNodes(
         false,
         {
-          role: 'some role',
+          role: 'doc-afterword',
           accessibleText: 'some accessibleText'
+          // isLandmark: true // truthy
         },
         [
           createResult(true, {
-            role: 'some role',
+            role: 'doc-afterword',
             accessibleText: 'some accessibleText'
+            // isLandmark: 111 // truthy
           })
         ]
       ),
       createResultWithProvidedRelatedNodes(
         true,
         {
-          role: 'different role',
+          role: 'alertdialog',
           accessibleText: 'some accessibleText'
+          // isLandmark: false // falsy
         },
         []
       ),
       createResultWithProvidedRelatedNodes(
         true,
         {
-          role: 'some role',
+          role: 'doc-afterword',
           accessibleText: 'different accessibleText'
+          // isLandmark: 'true' // truthy
         },
         []
       )
     ];
+    // console.log("expectedResult: ", JSON.stringify(expectedResult, null, 4));
+
     assert.deepEqual(result, expectedResult);
   });
 });

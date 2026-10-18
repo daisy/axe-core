@@ -1,5 +1,6 @@
 describe('runRules', () => {
-  let ver = axe.version.substring(0, axe.version.lastIndexOf('.'));
+  const _v = axe.version.replace(/-\w+\.\w+$/, '');
+  const ver = _v.substring(0, _v.lastIndexOf('.'));
   const { captureError } = axe.testUtils;
 
   // Strip nodeIndexes from result objects before comparison. nodeIndexes
